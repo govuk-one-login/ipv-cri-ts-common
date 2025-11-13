@@ -1,0 +1,20 @@
+{
+  "name": "ipv-cri-ts-common",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/govuk-one-login/ipv-cri-ts-common.git"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "npx nx run-many -t build",
+    "lint": "npx nx run-many -t lint",
+    "test": "npx nx run-many -t test"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "engines": {
+    "npm": "^11.0.0",
+    "node": ">20.0.0"
+  }
+}
