@@ -1,0 +1,30 @@
+{
+  "extends": "@tsconfig/node20/tsconfig.json",
+  "include": ["src"],
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "incremental": true,
+    
+    // additional files to output
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    // checking
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noUncheckedSideEffectImports": true,
+    "moduleDetection": "force",
+    "exactOptionalPropertyTypes": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noErrorTruncation": true,
+    "skipLibCheck": true,
+    
+    "forceConsistentCasingInFileNames": true,
+
+    // monorepo
+    "composite": true
+  }
+}
