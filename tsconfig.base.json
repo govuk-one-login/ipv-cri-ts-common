@@ -5,7 +5,7 @@
     "rootDir": "src",
     "outDir": "dist",
     "incremental": true,
-    
+
     // additional files to output
     "sourceMap": true,
     "declaration": true,
@@ -21,7 +21,7 @@
     "noPropertyAccessFromIndexSignature": true,
     "noErrorTruncation": true,
     "skipLibCheck": true,
-    
+
     "forceConsistentCasingInFileNames": true,
 
     // monorepo
