@@ -8,7 +8,8 @@
   "scripts": {
     "build": "npx nx run-many -t build",
     "lint": "npx nx run-many -t lint",
-    "test": "npx nx run-many -t test"
+    "test": "npx nx run-many -t test",
+    "init-new-package": "./scripts/init-new-package.sh"
   },
   "workspaces": [
     "packages/*"
