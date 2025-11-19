@@ -1,0 +1,36 @@
+{
+  "name": "ipv-cri-ts-common",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/govuk-one-login/ipv-cri-ts-common.git"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "npx nx run-many -t build",
+    "lint": "npx nx run-many -t lint",
+    "test": "npx nx run-many -t test"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "engines": {
+    "npm": "^11.0.0",
+    "node": "^20.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.1",
+    "@nx/js": "22.0.3",
+    "@swc-node/register": "1.11.1",
+    "@swc/core": "1.15.1",
+    "@swc/helpers": "0.5.17",
+    "@tsconfig/node20": "20.1.7",
+    "@types/node": "20.19.25",
+    "eslint": "9.39.1",
+    "eslint-config-prettier": "10.1.8",
+    "nx": "22.0.3",
+    "prettier": "3.6.2",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.46.4",
+    "vitest": "4.0.9"
+  }
+}
