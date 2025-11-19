@@ -10,7 +10,7 @@ export default defineConfig(
   tseslint.configs.stylisticTypeChecked,
   prettiereslint, // disables ESLint rules that might conflict with prettier
   {
-    files: ["**/src/**/*", "**/test/**/*"], // only apply to source code & unit tests
+    files: ["**/src/**/*", "**/tests/**/*"], // only apply to source code & unit tests
     languageOptions: {
       parserOptions: {
         projectService: true,
