@@ -19,7 +19,6 @@ mkdir $NAME
 
 cd $NAME
 
-# 
 sed -e "s|\$ORGANISATION|$ORGANISATION|" \
     -e "s|\$NAME|$NAME|" \
     -e "s|\$REPO_URL|$REPO_URL|" ../../scripts/new-package-template.json > package.json
@@ -33,3 +32,5 @@ touch src/index.ts
 mkdir tests
 
 ln -s ../../tsconfig.base.json tsconfig.json
+
+ln -s ../../vitest.config.base.ts vitest.config.ts
