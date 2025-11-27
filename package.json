@@ -19,6 +19,8 @@
     "node": "^22.0.0"
   },
   "devDependencies": {
+    "@aws-lambda-powertools/logger": "2.28.1",
+    "@aws-sdk/client-sqs": "3.934.0",
     "@eslint/js": "9.39.1",
     "@nx/js": "22.0.3",
     "@swc-node/register": "1.11.1",
@@ -27,6 +29,8 @@
     "@tsconfig/node22": "22.0.5",
     "@types/node": "20.19.25",
     "@vitest/coverage-v8": "4.0.9",
+    "aws-sdk-client-mock": "4.1.0",
+    "aws-sdk-client-mock-vitest": "7.0.1",
     "eslint": "9.39.1",
     "eslint-config-prettier": "10.1.8",
     "nx": "22.0.3",
