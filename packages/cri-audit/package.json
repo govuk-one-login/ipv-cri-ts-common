@@ -1,0 +1,42 @@
+{
+  "name": "@govuk-one-login/cri-audit",
+  "version": "0.0.0",
+  "description": "",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/govuk-one-login/ipv-cri-ts-common.git",
+    "directory": "packages/cri-audit"
+  },
+  "scripts": {
+    "build:cjs": "npx tsc --outDir dist/cjs --module commonjs --moduleResolution node10",
+    "build:esm": "npx tsc --outDir dist/esm",
+    "build": "npm run build:esm && npm run build:cjs",
+    "test": "npx vitest run"
+  },
+  "peerDependencies": {
+    "@aws-sdk/client-sqs": "^3.934.0",
+    "@govuk-one-login/cri-logger": "^0.0.0",
+    "@govuk-one-login/cri-types": "^0.0.0"
+  },
+  "files": [
+    "./dist"
+  ],
+  "module": "./dist/esm/index.js",
+  "main": "./dist/cjs/index.js",
+  "types": "./dist/cjs/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": {
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
+    }
+  }
+}
