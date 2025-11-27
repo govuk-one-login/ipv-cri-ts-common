@@ -140,3 +140,6 @@ vite.config.ts.timestamp-*
 
 # nx
 .nx
+
+# mac OS files
+.DS_Store
