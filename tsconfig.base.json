@@ -1,5 +1,5 @@
 {
-  "extends": "@tsconfig/node20/tsconfig.json",
+  "extends": "@tsconfig/node22/tsconfig.json",
   "include": ["src"],
   "compilerOptions": {
     "rootDir": "src",
@@ -16,7 +16,7 @@
     "noUncheckedIndexedAccess": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
-    "exactOptionalPropertyTypes": true,
+    "exactOptionalPropertyTypes": true, // differentiates between { blah?: string } (key either exists with string value or is not present at all) and { blah: string | undefined } (key always exists but value could be undefined)
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noErrorTruncation": true,

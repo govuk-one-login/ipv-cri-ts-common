@@ -45,3 +45,4 @@
 ### Other considerations
 
 - [ ] Update [README](./blob/main/README.md) with any new instructions or tasks
+- [ ] Post the PR in the [#di-cri-common](https://gds.slack.com/archives/C075PRX6SBF) Slack channel

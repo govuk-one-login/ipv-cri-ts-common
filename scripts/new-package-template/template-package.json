@@ -1,0 +1,35 @@
+{
+  "name": "@$ORGANISATION/$NAME",
+  "version": "0.0.0",
+  "description": "",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+$REPO_URL.git",
+    "directory": "packages/$NAME"
+  },
+  "scripts": {
+    "build:cjs": "npx tsc --outDir dist/cjs --module commonjs --moduleResolution node10",
+    "build:esm": "npx tsc --outDir dist/esm",
+    "build": "npm run build:esm && npm run build:cjs",
+    "test": "npx vitest run"
+  },
+  "files": ["./dist"],
+  "module": "./dist/esm/index.js",
+  "main": "./dist/cjs/index.js",
+  "types": "./dist/cjs/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": {
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
+    }
+  }
+}
