@@ -1,0 +1,30 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directories:
+      - /
+      - /packages/*/
+    schedule:
+      interval: daily
+      time: "03:00"
+    target-branch: main
+    labels:
+      - dependabot
+    commit-message:
+      prefix: BAU
+    groups:
+      aws:
+        patterns:
+          - "@aws-*"
+      eslint:
+        patterns:
+          - "eslint"
+          - "eslint-*"
+          - "@typescript-eslint/*"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    target-branch: main
+    labels:
+      - dependabot
