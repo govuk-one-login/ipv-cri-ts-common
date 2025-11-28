@@ -15,6 +15,9 @@ echo "Be sure to execute this function in the root of the repository, ie with '.
 
 read -p "Package name (within @$ORGANISATION/ scope): " NAME
 
+# add package to the list of coverage sources for sonar
+sed -i '' -E "s|^sonar.javascript.lcov.reportPaths=(.+)$|sonar.javascript.lcov.reportPaths=\1,./packages/$NAME/coverage/lcov.info|" sonar-project.properties
+
 cd packages
 
 mkdir $NAME

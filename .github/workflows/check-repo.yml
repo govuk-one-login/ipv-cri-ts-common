@@ -1,0 +1,120 @@
+name: Check repo
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    # Every Monday at 9am
+    - cron: "0 9 * * 1"
+
+permissions: {}
+concurrency:
+  group: check-repo-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  pre-commit:
+    name: pre-commit
+    if: ${{ github.event_name == 'pull_request' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull repository
+        uses: actions/checkout@v6.0.0
+
+      - name: Set up repository
+        uses: ./.github/actions/install-and-build
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: 3.x
+          cache-dependency-path: ./.github/workflows
+          cache: pip
+
+      - name: Install pre-commit
+        shell: bash
+        run: pip install pre-commit
+
+      - name: Cache pre-commit dependencies
+        uses: actions/cache@v4
+        with:
+          key: pre-commit-${{ runner.os }}-${{ hashFiles('**/.pre-commit-config.yaml') }}
+          restore-keys: pre-commit-${{ runner.os }}-
+          path: ~/.cache/pre-commit
+
+      - name: Run pre-commit
+        id: run-pre-commit
+        shell: bash
+        run: pre-commit run --all-files --show-diff-on-failure --color=always "${args[@]}"
+
+  unit-tests:
+    name: Unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull repository
+        uses: actions/checkout@v6.0.0
+        with:
+          fetch-depth: 0
+          filter: tree:0
+
+      - name: Set up repository
+        uses: ./.github/actions/install-and-build
+
+      - name: Set the base and head SHAs for the nx affected commands in CI
+        uses: nrwl/nx-set-shas@3e9ad7370203c1e93d109be57f3b72eb0eb511b1 # v4.4.0
+
+      - name: Run unit tests on affected packages
+        if: ${{ github.event_name == 'pull_request' }}
+        run: npx nx affected -t test:coverage
+
+      - name: Run unit tests on all packages
+        if: ${{ github.event_name != 'pull_request' }}
+        run: npm run test:coverage
+
+      - name: Archive coverage results
+        uses: actions/upload-artifact@v5.0.0
+        with:
+          name: coverage-${{ github.run_id }}
+          retention-days: 3
+          path: packages/*/coverage/lcov.info
+
+  sonarcloud:
+    name: Sonarcloud
+    needs: unit-tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull repository
+        uses: actions/checkout@v6.0.0
+        with:
+          fetch-depth: 0
+          filter: tree:0
+
+      - name: Get coverage results
+        uses: actions/download-artifact@v6.0.0
+        with:
+          name: coverage-${{ github.run_id }}
+          path:
+            packages
+            # upload-artifacts takes the lowest common ancestor of the files given when zipping
+            # https://github.com/actions/upload-artifact#upload-using-multiple-paths-and-exclusions
+
+      - name: Scan
+        uses: SonarSource/sonarqube-scan-action@fd88b7d7ccbaefd23d8f36f73b59db7a3d246602 # v6.0.0
+        with:
+          projectBaseDir: "."
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  codeql:
+    name: CodeQL
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+    steps:
+      - name: Run CodeQL scan
+        uses: govuk-one-login/github-actions/code-quality/codeql@f5362528578198e7851e96e0594f593beff0162e
+        with:
+          languages: javascript-typescript

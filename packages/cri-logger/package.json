@@ -13,7 +13,8 @@
     "build:cjs": "npx tsc --outDir dist/cjs --module commonjs --moduleResolution node10",
     "build:esm": "npx tsc --outDir dist/esm",
     "build": "npm run build:esm && npm run build:cjs",
-    "test": "npx vitest run"
+    "test": "npx vitest run",
+    "test:coverage": "npx vitest run --coverage"
   },
   "peerDependencies": {
     "@aws-lambda-powertools/logger": "^2.28.1"

@@ -10,6 +10,7 @@
     "format": "npx prettier --write .",
     "lint": "npx nx run-many -t lint",
     "test": "npx nx run-many -t test",
+    "test:coverage": "npx nx run-many -t test:coverage",
     "init-new-package": "./scripts/init-new-package.sh"
   },
   "workspaces": [
