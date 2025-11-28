@@ -6,5 +6,8 @@ export default defineConfig({
     env: {
       POWERTOOLS_LOG_LEVEL: "SILENT",
     },
+    coverage: {
+      reporter: ["text", "lcov"],
+    },
   },
 });

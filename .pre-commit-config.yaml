@@ -1,0 +1,54 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+exclude: (?:\/|^)(?:\.nx|dist)\/.*
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-added-large-files
+        exclude: package-lock.json
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: check-shebang-scripts-are-executable
+      - id: no-commit-to-branch
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      - id: detect-secrets
+        args: ["--baseline", ".secrets.baseline"]
+        exclude: package.lock.json
+  - repo: https://github.com/aws-cloudformation/cfn-lint
+    rev: v1.41.0
+    hooks:
+      - id: cfn-lint
+        files: .template\.ya?ml$
+  - repo: https://github.com/jorisroovers/gitlint
+    rev: v0.19.1
+    hooks:
+      - id: gitlint
+        args: [--contrib=CT1, --ignore=B5, --msg-filename]
+  - repo: local
+    hooks:
+      - id: prettier
+        name: prettier
+        language: system
+        files: ^.*$
+        exclude: |
+          (?x)^(
+            package-lock\.json|
+            LICENSE|
+            \.npmrc|
+            \.secrets\.baseline|
+            \.git/.+
+          )$
+        entry: npx prettier --check
+      - id: eslint
+        name: ESLint
+        language: system
+        files: ^.+/(?:src|tests)/.+\.[jt]sx?$
+        entry: npx eslint
+
+default_install_hook_types:
+  - pre-commit
+  - commit-msg # needed for linting commit messages
