@@ -7,6 +7,7 @@
   "type": "module",
   "scripts": {
     "build": "npx nx run-many -t build",
+    "format": "npx prettier --write .",
     "lint": "npx nx run-many -t lint",
     "test": "npx nx run-many -t test",
     "init-new-package": "./scripts/init-new-package.sh"
@@ -37,6 +38,7 @@
     "prettier": "3.6.2",
     "prettier-plugin-jsdoc": "1.5.0",
     "prettier-plugin-organize-imports": "4.3.0",
+    "prettier-plugin-sh": "0.18.0",
     "typescript": "5.9.3",
     "typescript-eslint": "8.46.4",
     "vitest": "4.0.9"

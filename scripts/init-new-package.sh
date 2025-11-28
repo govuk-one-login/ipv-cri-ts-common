@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 set -e
 
 # Use this script to initialise a new package directory.
@@ -21,7 +23,7 @@ cd ../scripts/new-package-template
 
 # copy files from new-package-template dir, substituting org, package name and repo url
 for filename in *; do
-    sed -e "s|\$ORGANISATION|$ORGANISATION|" \
+  sed -e "s|\$ORGANISATION|$ORGANISATION|" \
     -e "s|\$NAME|$NAME|" \
     -e "s|\$REPO_URL|$REPO_URL|" $filename > "../../packages/$NAME/${filename:9}"
 done
