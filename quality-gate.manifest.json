@@ -1,0 +1,50 @@
+{
+  "$schema": "https://raw.githubusercontent.com/govuk-one-login/quality-gates/refs/tags/v0.1.0/schemas/schema.json",
+  "services": [
+    {
+      "service-tag": "ipv-cri-ts-common",
+      "quality-gates": [
+        {
+          "check-types": ["code style and linting", "secret scanning"],
+          "config": {
+            "file": ".github/workflows/check-repo.yml",
+            "name": "pre-commit",
+            "path": "jobs.run-pre-commit"
+          },
+          "phase": "pre-merge",
+          "provider": "GitHub"
+        },
+        {
+          "check-types": ["unit"],
+          "config": {
+            "file": ".github/workflows/check-repo.yml",
+            "name": "Unit tests",
+            "path": "jobs.unit-tests"
+          },
+          "phase": "pre-merge",
+          "provider": "GitHub"
+        },
+        {
+          "check-types": ["code style and linting", "unit test coverage", "vulnerability detection"],
+          "config": {
+            "file": ".github/workflows/check-repo.yml",
+            "name": "Sonarcloud",
+            "path": "jobs.sonarcloud"
+          },
+          "phase": "pre-merge",
+          "provider": "GitHub"
+        },
+        {
+          "check-types": ["vulnerability detection"],
+          "config": {
+            "file": ".github/workflows/check-repo.yml",
+            "name": "CodeQL",
+            "path": "jobs.codeql"
+          },
+          "phase": "pre-merge",
+          "provider": "GitHub"
+        }
+      ]
+    }
+  ]
+}
