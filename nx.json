@@ -3,6 +3,7 @@
   "neverConnectToCloud": true,
   "targetDefaults": {
     "build": {
+      "dependsOn": ["^build"],
       "cache": true
     },
     "lint": {

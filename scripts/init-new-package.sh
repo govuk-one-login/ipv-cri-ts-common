@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 set -e
 
 # Use this script to initialise a new package directory.
@@ -13,6 +15,9 @@ echo "Be sure to execute this function in the root of the repository, ie with '.
 
 read -p "Package name (within @$ORGANISATION/ scope): " NAME
 
+# add package to the list of coverage sources for sonar
+sed -i '' -E "s|^sonar.javascript.lcov.reportPaths=(.+)$|sonar.javascript.lcov.reportPaths=\1,./packages/$NAME/coverage/lcov.info|" sonar-project.properties
+
 cd packages
 
 mkdir $NAME
@@ -21,7 +26,7 @@ cd ../scripts/new-package-template
 
 # copy files from new-package-template dir, substituting org, package name and repo url
 for filename in *; do
-    sed -e "s|\$ORGANISATION|$ORGANISATION|" \
+  sed -e "s|\$ORGANISATION|$ORGANISATION|" \
     -e "s|\$NAME|$NAME|" \
     -e "s|\$REPO_URL|$REPO_URL|" $filename > "../../packages/$NAME/${filename:9}"
 done
