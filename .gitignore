@@ -143,3 +143,6 @@ vite.config.ts.timestamp-*
 
 # mac OS files
 .DS_Store
+
+# used when bootstrapping a package in npm
+publish-temp

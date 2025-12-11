@@ -11,7 +11,8 @@
     "lint": "npx nx run-many -t lint",
     "test": "npx nx run-many -t test",
     "test:coverage": "npx nx run-many -t test:coverage",
-    "init-new-package": "./scripts/init-new-package.sh"
+    "init-new-package": "./scripts/init-new-package.sh",
+    "publish-v0-to-npm": "./scripts/publish-v0-to-npm.sh"
   },
   "workspaces": [
     "packages/*"
