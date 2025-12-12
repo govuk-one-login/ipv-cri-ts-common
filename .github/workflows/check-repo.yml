@@ -9,7 +9,10 @@ on:
     # Every Monday at 9am
     - cron: "0 9 * * 1"
 
-permissions: {}
+permissions:
+  id-token: write
+  contents: read
+
 concurrency:
   group: check-repo-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: true
@@ -26,28 +29,10 @@ jobs:
       - name: Set up repository
         uses: ./.github/actions/install-and-build
 
-      - name: Set up Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: 3.x
-          cache-dependency-path: ./.github/workflows
-          cache: pip
-
-      - name: Install pre-commit
-        shell: bash
-        run: pip install pre-commit
-
-      - name: Cache pre-commit dependencies
-        uses: actions/cache@v4
-        with:
-          key: pre-commit-${{ runner.os }}-${{ hashFiles('**/.pre-commit-config.yaml') }}
-          restore-keys: pre-commit-${{ runner.os }}-
-          path: ~/.cache/pre-commit
-
       - name: Run pre-commit
-        id: run-pre-commit
-        shell: bash
-        run: pre-commit run --all-files --show-diff-on-failure --color=always "${args[@]}"
+        uses: govuk-one-login/github-actions/code-quality/run-pre-commit@4aa6635feaed2295171e4637a9b1ef7cf03b1e96
+        with:
+          all-files: true
 
   unit-tests:
     name: Unit tests
@@ -55,9 +40,6 @@ jobs:
     steps:
       - name: Pull repository
         uses: actions/checkout@v6.0.0
-        with:
-          fetch-depth: 0
-          filter: tree:0
 
       - name: Set up repository
         uses: ./.github/actions/install-and-build
@@ -72,6 +54,41 @@ jobs:
       - name: Run unit tests on all packages
         if: ${{ github.event_name != 'pull_request' }}
         run: npm run test:coverage
+
+      - name: Archive coverage results
+        uses: actions/upload-artifact@v5.0.0
+        with:
+          name: coverage-${{ github.run_id }}
+          retention-days: 3
+          path: packages/*/coverage/lcov.info
+
+  integration-tests:
+    name: integration tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull repository
+        uses: actions/checkout@v6.0.0
+
+      - name: Set up repository
+        uses: ./.github/actions/install-and-build
+
+      - name: Set the base and head SHAs for the nx affected commands in CI
+        uses: nrwl/nx-set-shas@3e9ad7370203c1e93d109be57f3b72eb0eb511b1 # v4.4.0
+
+      - name: Assume AWS Role
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.DEPLOYMENT_ROLE_ARN }}
+          aws-region: eu-west-2
+
+      - name: Run integration tests
+        if: ${{ github.event_name == 'pull_request' }}
+        env:
+          SQS_QUEUE_URL: ${{ secrets.SQS_QUEUE_URL }}
+          TEST_HARNESS_EXECUTE_URL: ${{ secrets.TEST_HARNESS_EXECUTE_URL }}
+          AWS_REGION: eu-west-2
+        run: |
+          npm run test:integration
 
       - name: Archive coverage results
         uses: actions/upload-artifact@v5.0.0
