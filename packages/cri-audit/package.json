@@ -14,7 +14,7 @@
     "build:esm": "npx tsc --outDir dist/esm",
     "build": "npm run build:esm && npm run build:cjs",
     "test": "npx vitest run",
-    "test:coverage": "npx vitest run --coverage",
+    "test:coverage": "npx vitest run --coverage --exclude integration-tests",
     "test:integration": "vitest --config integration-tests/vitest.config.ts --run"
   },
   "peerDependencies": {
