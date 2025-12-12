@@ -20,7 +20,7 @@ interface UnmarshalledAuditItem {
 
 export const pause = (seconds: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, seconds * 1000));
 
-export async function pollForTestHarnessEvents(
+export async function pollTestHarnessForEvents(
   eventName: string,
   sessionId: string,
   timeoutMs = 30_000,

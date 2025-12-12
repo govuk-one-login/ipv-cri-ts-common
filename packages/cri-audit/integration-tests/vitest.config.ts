@@ -5,7 +5,7 @@ export default defineConfig({
     include: ["integration-tests/**/*.test.ts"],
     passWithNoTests: true,
     env: {
-      POWERTOOLS_LOG_LEVEL: "SILENT",
+      POWERTOOLS_LOG_LEVEL: "INFO",
     },
     coverage: {
       reporter: ["text", "lcov"],

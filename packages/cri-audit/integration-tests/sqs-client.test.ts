@@ -1,5 +1,5 @@
 import { buildAndSendAuditEvent } from "@govuk-one-login/cri-audit";
-import { pause, pollForTestHarnessEvents } from "@govuk-one-login/cri-test-resources-helpers";
+import { pause, pollTestHarnessForEvents } from "@govuk-one-login/cri-test-resources-helpers";
 import { SessionItem, UnixMillisecondsTimestamp, UnixSecondsTimestamp } from "@govuk-one-login/cri-types";
 import { v4 as uuidv4 } from "uuid";
 import { beforeEach, describe, expect, test } from "vitest";
@@ -45,7 +45,7 @@ describe.sequential("SQS integration tests", () => {
 
     await pause(0.5);
 
-    const records = await pollForTestHarnessEvents(eventName, sessionId);
+    const records = await pollTestHarnessForEvents(eventName, sessionId);
 
     expect(records.length).toBeGreaterThan(0);
 
