@@ -1,0 +1,69 @@
+name: Version bump, create release & publish to npm
+
+on:
+  workflow_dispatch:
+    inputs:
+      module_name:
+        type: string
+        description: The name of the module to release
+        required: true
+      first_release:
+        type: boolean
+        description: Is this the first release of the module?
+        required: true
+
+permissions:
+  # id-token required for npm OIDC
+  # https://docs.npmjs.com/trusted-publishers#step-2-configure-your-cicd-workflow
+  id-token: write
+  # contents includes tags, releases etc
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    # this environment is required by the trusted publisher settings configured in the npm package registry
+    environment: npm-publish
+    steps:
+      - name: Checkout the main branch
+        uses: actions/checkout@v6.0.1
+        with:
+          fetch-depth: 0
+          filter: tree:0
+
+      - name: Setup node
+        uses: actions/setup-node@v6.1.0
+        with:
+          node-version: 22
+          cache: "npm"
+          # registry-url is required to get the action to authenticate with a registry
+          registry-url: "https://registry.npmjs.org"
+
+      # at time of writing, setup-node installs npm v10 which
+      # does not support OIDC-based publishing
+      - name: Install npm 11
+        run: npm install -g npm@11
+
+      - name: Install packages
+        run: npm ci
+
+      - name: Set the base and head SHAs for the nx affected commands in CI
+        uses: nrwl/nx-set-shas@v4.4.0
+
+      - name: Build affected libs
+        run: npx nx affected -t prepare build
+
+      - name: Fail if we have git changes
+        run: git diff --quiet HEAD
+
+      - name: Run nx release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # nx always sets --legacy-peer-deps when calling npm; this causes it to mutate package-lock.json
+          # when releasing
+          # https://github.com/nrwl/nx/issues/22066#issuecomment-2576366862
+          npm_config_legacy_peer_deps: false
+        run: |
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "GitHub Actions"
+          npx nx release --yes ${{ github.event.inputs.first_release == 'true' && '--first-release' || '' }} --projects=${{ github.event.inputs.module_name }}
