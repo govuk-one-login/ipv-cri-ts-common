@@ -1,8 +1,13 @@
 import { buildAndSendAuditEvent } from "@govuk-one-login/cri-audit";
-import { pollForTestHarnessEvents } from "@govuk-one-login/cri-test-resources-helpers";
+import { pause, pollForTestHarnessEvents } from "@govuk-one-login/cri-test-resources-helpers";
 import { SessionItem, UnixMillisecondsTimestamp, UnixSecondsTimestamp } from "@govuk-one-login/cri-types";
 import { v4 as uuidv4 } from "uuid";
 import { beforeEach, describe, expect, test } from "vitest";
+
+type Event = {
+  event_name: string;
+  [key: string]: unknown;
+};
 
 const QUEUE_URL = process.env.SQS_QUEUE_URL;
 
@@ -13,7 +18,7 @@ if (!QUEUE_URL) {
 const eventName = "TEST_EVENT";
 const component_id = "TEST_COMPONENT";
 
-describe("SQS integration tests", () => {
+describe.sequential("SQS integration tests", () => {
   let session: SessionItem;
   let sessionId: string;
 
@@ -35,8 +40,10 @@ describe("SQS integration tests", () => {
     };
   });
 
-  test("Should send message to the SQS Client and receive the message from the /events endpoint", async () => {
+  test("Should send audit event to the SQS Client and receive message from the /events endpoint", async () => {
     await buildAndSendAuditEvent(QUEUE_URL, eventName, component_id, session);
+
+    await pause(0.5);
 
     const records = await pollForTestHarnessEvents(eventName, sessionId);
 
@@ -44,7 +51,9 @@ describe("SQS integration tests", () => {
 
     const record = records[0];
 
+    const event = record.event as Event;
+
     expect(record.partitionKey).toBe(`SESSION#${sessionId}`);
-    expect(record.event.event_name).toContain(eventName);
+    expect(event.event_name).toContain(eventName);
   });
 });

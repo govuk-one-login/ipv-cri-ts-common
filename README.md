@@ -17,6 +17,9 @@ npm install
 
 # install pre-commit git hooks
 pre-commit install
+
+# to install the packages within the repo
+npm run build
 ```
 
 ## Commit messages
