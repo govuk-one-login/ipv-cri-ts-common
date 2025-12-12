@@ -1,4 +1,9 @@
 name: Install dependencies & build packages
+inputs:
+  build:
+    description: Whether to build packages (defaults to "true")
+    required: false
+    default: "true"
 runs:
   using: "composite"
   steps:
@@ -17,5 +22,6 @@ runs:
       run: npm ci
 
     - name: Build
+      if: ${{ inputs.build == 'true' }}
       shell: bash
       run: npm run build

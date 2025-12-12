@@ -1,0 +1,54 @@
+name: Version bump, create release & publish to npm
+
+on:
+  workflow_dispatch:
+    inputs:
+      module_name:
+        type: string
+        description: The name of the module to release (looks like @govuk-one-login/cri-some-module)
+        required: true
+      first_release:
+        type: boolean
+        description: Is this the first release of the module?
+        required: true
+
+permissions:
+  # id-token required for npm OIDC
+  # https://docs.npmjs.com/trusted-publishers#step-2-configure-your-cicd-workflow
+  id-token: write
+  # contents includes tags, releases etc
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    # this environment is required by the trusted publisher settings configured in the npm package registry
+    # it also gives access to the app credentials required to push to main
+    environment: npm-publish
+    steps:
+      - name: Checkout the main branch
+        uses: actions/checkout@v6.0.1
+
+      - name: Set up repository
+        uses: ./.github/actions/install-and-build
+        with:
+          build: "false"
+
+      - name: Build the requested package
+        run: npx nx build ${{ inputs.module_name }}
+
+      - name: Fail if we have git changes
+        run: git diff --quiet HEAD
+
+      - name: Generate GitHub App token for push to main
+        id: generate-app-token
+        uses: actions/create-github-app-token@v2.2.1
+        with:
+          app-id: ${{ vars.CRI_PUBLISHER_APP_ID }}
+          private-key: ${{ secrets.CRI_PUBLISHER_PRIVATE_KEY }}
+
+      - name: Run nx release
+        env:
+          GITHUB_TOKEN: ${{ steps.generate-app-token.outputs.token }}
+        run: |
+          npx nx release --yes ${{ inputs.first_release == true && '--first-release' || '' }} --projects ${{ inputs.module_name }}
