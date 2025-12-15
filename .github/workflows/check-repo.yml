@@ -92,7 +92,7 @@ jobs:
           filter: tree:0
 
       - name: Get coverage results
-        uses: actions/download-artifact@v6.0.0
+        uses: actions/download-artifact@v7.0.0
         continue-on-error: true
         with:
           name: coverage-${{ github.run_id }}
