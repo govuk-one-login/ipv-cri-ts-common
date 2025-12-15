@@ -29,11 +29,28 @@ jobs:
       - name: Set up repository
         uses: ./.github/actions/install-and-build
 
-      - name: Run pre-commit
-        uses: govuk-one-login/github-actions/code-quality/run-pre-commit@4aa6635feaed2295171e4637a9b1ef7cf03b1e96
+      - name: Set up Python
+        uses: actions/setup-python@v6
         with:
-          all-files: true
-          install-dependencies: true
+          python-version: 3.13
+          cache-dependency-path: ./.github/workflows
+          cache: pip
+
+      - name: Install pre-commit
+        shell: bash
+        run: pip install pre-commit
+
+      - name: Cache pre-commit dependencies
+        uses: actions/cache@v4
+        with:
+          key: pre-commit-${{ runner.os }}-${{ hashFiles('**/.pre-commit-config.yaml') }}
+          restore-keys: pre-commit-${{ runner.os }}-
+          path: ~/.cache/pre-commit
+
+      - name: Run pre-commit
+        id: run-pre-commit
+        shell: bash
+        run: pre-commit run --all-files --show-diff-on-failure --color=always "${args[@]}"
 
   unit-tests:
     name: Unit tests
@@ -42,7 +59,9 @@ jobs:
       - name: Pull repository
         uses: actions/checkout@v6.0.0
         with:
+          # Required for nx set SHAs: https://github.com/nrwl/nx-set-shas#example-usage
           fetch-depth: 0
+          filter: tree:0
 
       - name: Set up repository
         uses: ./.github/actions/install-and-build
@@ -73,6 +92,7 @@ jobs:
         uses: actions/checkout@v6.0.0
         with:
           fetch-depth: 0
+          filter: tree:0
 
       - name: Set up repository
         uses: ./.github/actions/install-and-build
