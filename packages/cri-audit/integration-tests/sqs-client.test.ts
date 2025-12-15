@@ -1,7 +1,7 @@
 import { buildAndSendAuditEvent } from "@govuk-one-login/cri-audit";
 import { pause, pollTestHarnessForEvents } from "@govuk-one-login/cri-test-resources-helpers";
 import { SessionItem, UnixMillisecondsTimestamp, UnixSecondsTimestamp } from "@govuk-one-login/cri-types";
-import { v4 as uuidv4 } from "uuid";
+import { randomUUID } from "crypto";
 import { beforeEach, describe, expect, test } from "vitest";
 
 type Event = {
@@ -23,7 +23,7 @@ describe.sequential("SQS integration tests", () => {
   let sessionId: string;
 
   beforeEach(() => {
-    sessionId = uuidv4().toString();
+    sessionId = randomUUID();
 
     session = {
       sessionId,
