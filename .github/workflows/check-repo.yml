@@ -40,6 +40,8 @@ jobs:
     steps:
       - name: Pull repository
         uses: actions/checkout@v6.0.0
+        with:
+          fetch-depth: 0
 
       - name: Set up repository
         uses: ./.github/actions/install-and-build
@@ -68,6 +70,8 @@ jobs:
     steps:
       - name: Pull repository
         uses: actions/checkout@v6.0.0
+        with:
+          fetch-depth: 0
 
       - name: Set up repository
         uses: ./.github/actions/install-and-build
