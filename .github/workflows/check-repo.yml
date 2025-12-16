@@ -85,7 +85,7 @@ jobs:
           path: packages/*/coverage/lcov.info
 
   integration-tests:
-    name: integration tests
+    name: Integration tests
     runs-on: ubuntu-latest
     environment: integration-tests
     steps:
@@ -113,15 +113,7 @@ jobs:
           SQS_QUEUE_URL: ${{ secrets.SQS_QUEUE_URL }}
           TEST_HARNESS_EXECUTE_URL: ${{ secrets.TEST_HARNESS_EXECUTE_URL }}
           AWS_REGION: eu-west-2
-        run: |
-          npm run test:integration
-
-      - name: Archive coverage results
-        uses: actions/upload-artifact@v5.0.0
-        with:
-          name: coverage-${{ github.run_id }}
-          retention-days: 3
-          path: packages/*/coverage/lcov.info
+        run: npx nx affected -t test:integration
 
   sonarcloud:
     name: Sonarcloud

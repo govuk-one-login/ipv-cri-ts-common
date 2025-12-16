@@ -13,11 +13,6 @@ The following functions are exported:
 | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | `pollForTestHarnessEvents()` | Invokes the `TEST_HARNESS_EXECUTE_API` to retrieve the events that were sent to the SQS queue and then processed by the the dequeue lambda. |
 
-To run these test use the following:
-
-`npm run test:integration` and add the
-[environment variables](https://github.com/govuk-one-login/ipv-cri-ts-common/.env) to your terminal.
-
 ## Module syntax
 
 This module is currently built to both CJS and ESM standards, so should work universally. However, we expect be moving

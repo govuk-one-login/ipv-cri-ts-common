@@ -23,7 +23,7 @@ export const pause = (seconds: number): Promise<void> => new Promise((resolve) =
 export async function pollTestHarnessForEvents(
   eventName: string,
   sessionId: string,
-  timeoutMs = 30_000,
+  timeoutMs = 30000,
   pollIntervalSeconds = 0.25,
 ): Promise<AuditEventRecord[]> {
   const partitionKeyQuery = `SESSION#${sessionId}`;
@@ -37,8 +37,6 @@ export async function pollTestHarnessForEvents(
   const url =
     `${baseUrl}events?partitionKey=${encodeURIComponent(partitionKeyQuery)}` +
     `&sortKey=${encodeURIComponent(sortKeyQuery)}`;
-
-  await pause(0.3);
 
   const stopTime = Date.now() + timeoutMs;
 
