@@ -38,7 +38,9 @@ jobs:
           build: "false"
 
       - name: Build the requested package
-        run: npx nx build ${{ inputs.module_name }}
+        env:
+          MODULE_NAME: ${{ inputs.module_name }}
+        run: npx nx build "$MODULE_NAME"
 
       - name: Fail if we have git changes
         run: git diff --quiet HEAD
@@ -53,5 +55,6 @@ jobs:
       - name: Run nx release
         env:
           GITHUB_TOKEN: ${{ steps.generate-app-token.outputs.token }}
+          MODULE_NAME: ${{ inputs.module_name }}
         run: |
-          npx nx release --yes ${{ inputs.first_release == true && '--first-release' || '' }} --projects ${{ inputs.module_name }}
+          npx nx release --yes ${{ inputs.first_release == true && '--first-release' || '' }} --projects "$MODULE_NAME"
