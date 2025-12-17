@@ -52,6 +52,12 @@ jobs:
           app-id: ${{ vars.CRI_PUBLISHER_APP_ID }}
           private-key: ${{ secrets.CRI_PUBLISHER_PRIVATE_KEY }}
 
+      - name: Configure git user
+        id: configure-git-user
+        run: |
+          git config --global user.email "250124749+gov-uk-one-login-cri-publisher[bot]@users.noreply.github.com"
+          git config --global user.name "GOV.UK One Login CRI Publisher"
+
       - name: Run nx release
         env:
           GITHUB_TOKEN: ${{ steps.generate-app-token.outputs.token }}
