@@ -28,6 +28,9 @@ jobs:
     steps:
       - name: Checkout the main branch
         uses: actions/checkout@v6.0.1
+        with:
+          fetch-depth: 0
+          filter: tree:0
 
       - name: Set up repository
         uses: ./.github/actions/install-and-build
