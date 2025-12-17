@@ -1,5 +1,5 @@
 import { buildAndSendAuditEvent } from "@govuk-one-login/cri-audit";
-import { pause, pollTestHarnessForEvents } from "@govuk-one-login/cri-test-resources-helpers";
+import { pollTestHarnessForEvents } from "@govuk-one-login/cri-test-resources-helpers";
 import { SessionItem, UnixMillisecondsTimestamp, UnixSecondsTimestamp } from "@govuk-one-login/cri-types";
 import { randomUUID } from "crypto";
 import { beforeEach, describe, expect, test } from "vitest";
@@ -13,6 +13,12 @@ const QUEUE_URL = process.env.SQS_QUEUE_URL;
 
 if (!QUEUE_URL) {
   throw new Error("Missing environment variable for SQS_QUEUE_URL");
+}
+
+const TEST_HARNESS_URL = process.env.TEST_HARNESS_EXECUTE_URL;
+
+if (!TEST_HARNESS_URL) {
+  throw new Error("Missing environment variable for TEST_HARNESS_EXECUTE_URL");
 }
 
 const eventName = "TEST_EVENT";
@@ -43,11 +49,9 @@ describe.sequential("SQS integration tests", () => {
   test("Should send audit event to the SQS Client and receive message from the /events endpoint", async () => {
     await buildAndSendAuditEvent(QUEUE_URL, eventName, component_id, session);
 
-    await pause(0.5);
+    const records = await pollTestHarnessForEvents(TEST_HARNESS_URL, eventName, sessionId);
 
-    const records = await pollTestHarnessForEvents(eventName, sessionId);
-
-    expect(records.length).toBeGreaterThan(0);
+    expect(records.length).equal(1);
 
     const record = records[0];
 

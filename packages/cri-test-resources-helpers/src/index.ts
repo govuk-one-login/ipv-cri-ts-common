@@ -1,1 +1,1 @@
-export { pause, pollTestHarnessForEvents } from "./api-gateway-helper.js";
+export { pollTestHarnessForEvents } from "./poll-events-helper.js";

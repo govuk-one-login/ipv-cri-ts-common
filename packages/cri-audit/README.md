@@ -35,9 +35,9 @@ The package is very small, so for implementation questions see the
 
 ## Running integration tests
 
-To run these test authenticate your AWS CLI with the right account and set the following environment variables:
+Authenticate your AWS CLI with the right account and set the following environment variables:
 
-- `TEST_HARNESS_EXECUTE_API`
+- `TEST_HARNESS_EXECUTE_URL`
 - `SQS_QUEUE_URL`
 
 and use the following command:

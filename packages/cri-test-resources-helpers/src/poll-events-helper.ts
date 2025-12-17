@@ -18,9 +18,10 @@ interface UnmarshalledAuditItem {
   event: string | Record<string, unknown>;
 }
 
-export const pause = (seconds: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, seconds * 1000));
+export const wait = (seconds: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, seconds * 1000));
 
 export async function pollTestHarnessForEvents(
+  baseUrl: string,
   eventName: string,
   sessionId: string,
   timeoutMs = 30000,
@@ -28,11 +29,6 @@ export async function pollTestHarnessForEvents(
 ): Promise<AuditEventRecord[]> {
   const partitionKeyQuery = `SESSION#${sessionId}`;
   const sortKeyQuery = `TXMA#${eventName}`;
-
-  const baseUrl = process.env["TEST_HARNESS_EXECUTE_URL"];
-  if (!baseUrl) {
-    throw new Error("Missing TEST_HARNESS_EXECUTE_URL env var");
-  }
 
   const url =
     `${baseUrl}events?partitionKey=${encodeURIComponent(partitionKeyQuery)}` +
@@ -42,17 +38,16 @@ export async function pollTestHarnessForEvents(
 
   while (Date.now() < stopTime) {
     const res = await signedFetch(url);
+    await wait(pollIntervalSeconds);
 
     if (!res.ok) {
-      await pause(pollIntervalSeconds);
-      continue;
+      throw new Error(`Events response returned the status: ${res.statusText}`);
     }
 
     const body = await res.json();
 
     if (!Array.isArray(body) || body.length === 0) {
-      await pause(pollIntervalSeconds);
-      continue;
+      throw new Error(`Body response returned: ${JSON.stringify(body)}`);
     }
 
     const rawItems = body as RawDynamoDBItem[];
@@ -78,8 +73,6 @@ export async function pollTestHarnessForEvents(
     if (records.length > 0) {
       return records;
     }
-
-    await pause(pollIntervalSeconds);
   }
 
   throw new Error(`Timed out waiting for events for sessionId=${sessionId}, eventName=${eventName}`);
