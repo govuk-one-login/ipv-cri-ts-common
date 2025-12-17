@@ -18,8 +18,8 @@
   },
   "peerDependencies": {
     "@aws-sdk/client-sqs": "^3.934.0",
-    "@govuk-one-login/cri-logger": "^0.0.0",
-    "@govuk-one-login/cri-types": "^0.0.0"
+    "@govuk-one-login/cri-logger": "0.x",
+    "@govuk-one-login/cri-types": "0.x"
   },
   "files": [
     "./dist"
