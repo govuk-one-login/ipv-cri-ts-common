@@ -26,11 +26,19 @@ jobs:
     # it also gives access to the app credentials required to push to main
     environment: npm-publish
     steps:
+      - name: Generate GitHub App token for push to main
+        id: generate-app-token
+        uses: actions/create-github-app-token@v2.2.1
+        with:
+          app-id: ${{ vars.CRI_PUBLISHER_APP_ID }}
+          private-key: ${{ secrets.CRI_PUBLISHER_PRIVATE_KEY }}
+
       - name: Checkout the main branch
         uses: actions/checkout@v6.0.1
         with:
           fetch-depth: 0
           filter: tree:0
+          token: ${{ steps.generate-app-token.outputs.token }}
 
       - name: Set up repository
         uses: ./.github/actions/install-and-build
@@ -44,13 +52,6 @@ jobs:
 
       - name: Fail if we have git changes
         run: git diff --quiet HEAD
-
-      - name: Generate GitHub App token for push to main
-        id: generate-app-token
-        uses: actions/create-github-app-token@v2.2.1
-        with:
-          app-id: ${{ vars.CRI_PUBLISHER_APP_ID }}
-          private-key: ${{ secrets.CRI_PUBLISHER_PRIVATE_KEY }}
 
       - name: Configure git user
         id: configure-git-user
