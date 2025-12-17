@@ -3,17 +3,14 @@
 set -e
 
 # Use this script to initialise a new package directory.
-# It will create the necessary directories, plus:
-# - package.json, based on new-package-template.json
-# - tsconfig as a symlink to /tsconfig.base.json
-# - index.ts
+# It will create the necessary directories and initial files.
 
 ORGANISATION=govuk-one-login
 REPO_URL=https://github.com/govuk-one-login/ipv-cri-ts-common
 
-echo "Be sure to execute this function in the root of the repository, ie with './scripts/init-new-package.sh', not './init-new-package.sh'."
+echo "Be sure to execute this function in the root of the repository, ideally using 'npm run init-new-package'."
 
-read -p "Package name (within @$ORGANISATION/ scope): " NAME
+read -p "Scoped package name (exclude @$ORGANISATION/, include 'cri-' prefix): " NAME
 
 # add package to the list of coverage sources for sonar
 sed -i '' -E "s|^sonar.javascript.lcov.reportPaths=(.+)$|sonar.javascript.lcov.reportPaths=\1,./packages/$NAME/coverage/lcov.info|" sonar-project.properties

@@ -2,7 +2,7 @@
 
 TypeScript shared libraries, intended to be consumed from npm by GOV.UK One Login's Credential Issuers (CRIs).
 
-## Development
+## Setting up
 
 To get started, make sure you have nvm and pre-commit installed globally already.
 
@@ -19,7 +19,7 @@ npm install
 pre-commit install
 ```
 
-### Commit messages
+## Commit messages
 
 The publishing workflow depends on [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/#summary) to
 identify fixes, features and breaking changes in your work. These are then used to generate the version number for any
@@ -50,7 +50,35 @@ passes the `pre-commit` validator. However, it's probably a good idea to specify
 applicable. Conventional commit recommendations indicate that this should be done with a `Refs` footer, but it can also
 be included in the message header if preferred.
 
-### Dependencies
+## Bootstrapping packages
+
+In order to ensure consistency and make it easy to create a new package, there are two scripts to automate the process
+of bootstrapping a new package.
+
+To set up a new package directory in the repository, run:
+
+```sh
+$ npm run init-new-package
+```
+
+This will ask you for the package name and create the necessary directory, package.json and other files.
+
+To publish v0.0.0 of your new package to npm, someone with access to the `@govuk-one-login` organisation needs to run:
+
+```sh
+$ npm run publish-v0-to-npm
+```
+
+The script will ask for the package name, authenticate with npm and publish a single package.json file containing only
+the package name and version. It runs independently of the packages directory, so any code you have written for your
+package already will not be affected or published.
+
+This command must be run by someone with access to the `@govuk-one-login` organisation on npm, as only they have
+permissions to publish the package. Once the package has been initialised, they should immediately set up OIDC
+publishing (aka 'trusted publishing') to enable automatic secure publishing from GitHub Actions, and use the strictest
+possible settings (eg, specify environment name and disable tokens).
+
+## Dependencies
 
 In this section:
 
@@ -88,7 +116,7 @@ Specifying peer dependencies on packages can be done as follows:
   pinned version (ie, no `^` or `~` at the start of the version number)
 - Add the dependency to the `peerDependencies` with the same version number, prefixed with a caret (`^`)
 
-### SDK Clients
+## SDK Clients
 
 It is recommended to handle stateful SDK clients in the following way:
 
