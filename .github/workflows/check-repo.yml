@@ -86,6 +86,7 @@ jobs:
 
   integration-tests:
     name: Integration tests
+    if: ${{ github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
     environment: integration-tests
     steps:
@@ -108,7 +109,6 @@ jobs:
           aws-region: eu-west-2
 
       - name: Run integration tests
-        if: ${{ github.event_name == 'pull_request' }}
         env:
           SQS_QUEUE_URL: ${{ secrets.SQS_QUEUE_URL }}
           TEST_HARNESS_EXECUTE_URL: ${{ secrets.TEST_HARNESS_EXECUTE_URL }}
