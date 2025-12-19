@@ -79,6 +79,9 @@ jobs:
         if: ${{ github.event_name != 'pull_request' }}
         run: npm run test:coverage
 
+      - name: Fix lcov.info files
+        run: ./scripts/fix-lcov.sh
+
       - name: Archive coverage results
         id: upload-artifacts
         uses: actions/upload-artifact@v5.0.0
