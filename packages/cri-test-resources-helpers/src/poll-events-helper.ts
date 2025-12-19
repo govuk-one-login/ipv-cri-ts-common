@@ -55,6 +55,7 @@ async function requestTestHarnessEventsOnce(url: string) {
 }
 
 export async function pollTestHarnessForEvents(
+  baseUrl: string,
   eventName: string,
   sessionId: string,
   timeoutMs = 30000,
@@ -62,11 +63,6 @@ export async function pollTestHarnessForEvents(
 ): Promise<AuditEventRecord[]> {
   const partitionKeyQuery = `SESSION#${sessionId}`;
   const sortKeyQuery = `TXMA#${eventName}`;
-
-  const baseUrl = process.env["TEST_HARNESS_EXECUTE_URL"];
-  if (!baseUrl) {
-    throw new Error("Missing TEST_HARNESS_EXECUTE_URL env var");
-  }
 
   const url =
     `${baseUrl}events?partitionKey=${encodeURIComponent(partitionKeyQuery)}` +
