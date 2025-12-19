@@ -9,7 +9,10 @@ on:
     # Every Monday at 9am
     - cron: "0 9 * * 1"
 
-permissions: {}
+permissions:
+  id-token: write
+  contents: read
+
 concurrency:
   group: check-repo-${{ github.head_ref || github.ref_name }}
   cancel-in-progress: true
@@ -29,7 +32,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
-          python-version: 3.x
+          python-version: 3.13
           cache-dependency-path: ./.github/workflows
           cache: pip
 
@@ -56,6 +59,7 @@ jobs:
       - name: Pull repository
         uses: actions/checkout@v6.0.0
         with:
+          # Required for nx set SHAs: https://github.com/nrwl/nx-set-shas#example-usage
           fetch-depth: 0
           filter: tree:0
 
@@ -79,6 +83,37 @@ jobs:
           name: coverage-${{ github.run_id }}
           retention-days: 3
           path: packages/*/coverage/lcov.info
+
+  integration-tests:
+    name: Integration tests
+    if: ${{ github.event_name == 'pull_request' }}
+    runs-on: ubuntu-latest
+    environment: integration-tests
+    steps:
+      - name: Pull repository
+        uses: actions/checkout@v6.0.0
+        with:
+          fetch-depth: 0
+          filter: tree:0
+
+      - name: Set up repository
+        uses: ./.github/actions/install-and-build
+
+      - name: Set the base and head SHAs for the nx affected commands in CI
+        uses: nrwl/nx-set-shas@3e9ad7370203c1e93d109be57f3b72eb0eb511b1 # v4.4.0
+
+      - name: Assume AWS Role
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.DEPLOYMENT_ROLE_ARN }}
+          aws-region: eu-west-2
+
+      - name: Run integration tests
+        env:
+          SQS_QUEUE_URL: ${{ secrets.SQS_QUEUE_URL }}
+          TEST_HARNESS_EXECUTE_URL: ${{ secrets.TEST_HARNESS_EXECUTE_URL }}
+          AWS_REGION: eu-west-2
+        run: npx nx affected -t test:integration
 
   sonarcloud:
     name: Sonarcloud

@@ -33,6 +33,17 @@ used when constructing audit events.
 The package is very small, so for implementation questions see the
 [source code](https://github.com/govuk-one-login/ipv-cri-ts-common/blob/main/packages/cri-audit/src/index.ts).
 
+## Running integration tests
+
+Authenticate your AWS CLI with the right account and set the following environment variables:
+
+- `TEST_HARNESS_EXECUTE_URL`
+- `SQS_QUEUE_URL`
+
+and use the following command:
+
+`npm run test:integration`
+
 ## Module syntax
 
 This module is currently built to both CJS and ESM standards, so should work universally. However, we expect be moving
