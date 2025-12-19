@@ -13,7 +13,7 @@
     "build:cjs": "npx tsc --outDir dist/cjs --module commonjs --moduleResolution node10",
     "build:esm": "npx tsc --outDir dist/esm",
     "build": "npm run build:esm && npm run build:cjs",
-    "test": "npx vitest run",
+    "test": "npx vitest run --exclude integration-tests",
     "test:coverage": "npx vitest run --coverage --exclude integration-tests",
     "test:integration": "vitest --config integration-tests/vitest.config.ts --run"
   },
