@@ -55,6 +55,8 @@ jobs:
   unit-tests:
     name: Unit tests
     runs-on: ubuntu-latest
+    outputs:
+      coverage-artifact-id: ${{ steps.upload-artifacts.outputs.artifact-id }}
     steps:
       - name: Pull repository
         uses: actions/checkout@v6.0.0
@@ -78,11 +80,13 @@ jobs:
         run: npm run test:coverage
 
       - name: Archive coverage results
+        id: upload-artifacts
         uses: actions/upload-artifact@v5.0.0
         with:
           name: coverage-${{ github.run_id }}
           retention-days: 3
           path: packages/*/coverage/lcov.info
+          if-no-files-found: ignore
 
   integration-tests:
     name: Integration tests
@@ -103,7 +107,7 @@ jobs:
         uses: nrwl/nx-set-shas@3e9ad7370203c1e93d109be57f3b72eb0eb511b1 # v4.4.0
 
       - name: Assume AWS Role
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@61815dcd50bd041e203e49132bacad1fd04d2708 # v5.1.1
         with:
           role-to-assume: ${{ vars.DEPLOYMENT_ROLE_ARN }}
           aws-region: eu-west-2
@@ -120,29 +124,16 @@ jobs:
     needs: unit-tests
     runs-on: ubuntu-latest
     steps:
-      - name: Pull repository
-        uses: actions/checkout@v6.0.0
-        with:
-          fetch-depth: 0
-          filter: tree:0
-
-      - name: Get coverage results
-        uses: actions/download-artifact@v6.0.0
-        continue-on-error: true
-        with:
-          name: coverage-${{ github.run_id }}
-          path:
-            packages
-            # upload-artifacts takes the lowest common ancestor of the files given when zipping
-            # https://github.com/actions/upload-artifact#upload-using-multiple-paths-and-exclusions
-
       - name: Scan
-        uses: SonarSource/sonarqube-scan-action@fd88b7d7ccbaefd23d8f36f73b59db7a3d246602 # v6.0.0
+        uses: govuk-one-login/github-actions/code-quality/sonarcloud@f5362528578198e7851e96e0594f593beff0162e
         with:
-          projectBaseDir: "."
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          coverage-artifact:
+            ${{ needs.unit-tests.outputs.coverage-artifact-id && format('coverage-{0}', github.run_id) || null }}
+          coverage-run-id: ${{ github.run_id }}
+          coverage-location: packages
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          sonar-token: ${{ secrets.SONAR_TOKEN }}
+          pull-repository: "true"
 
   codeql:
     name: CodeQL
