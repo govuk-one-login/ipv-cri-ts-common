@@ -66,4 +66,4 @@ jobs:
           GITHUB_TOKEN: ${{ steps.generate-app-token.outputs.token }}
           MODULE_NAME: ${{ inputs.module_name }}
         run: |
-          npx nx release --yes ${{ inputs.first_release == true && '--first-release' || '' }} --projects "$MODULE_NAME"
+          npx nx release --yes ${{ inputs.first_release == true && '--first-release' || '' }} ${{ inputs.module_name != '*' && '--projects "$MODULE_NAME"' }}
