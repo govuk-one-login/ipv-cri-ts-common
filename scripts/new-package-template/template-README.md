@@ -2,6 +2,11 @@
 
 Write a summary of what the package does here.
 
+> [!WARNING]
+>
+> This package is in a pre-release state and its interface may change without warning. Once it's ready for release, this
+> block should be removed and a `feat!` commit message used to create a major version bump.
+
 Further information and source code can be found in the [GitHub repository]($REPO_URL/blob/main/packages/$NAME).
 
 ## Usage
