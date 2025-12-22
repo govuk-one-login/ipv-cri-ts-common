@@ -5,7 +5,9 @@ on:
     inputs:
       module_name:
         type: string
-        description: The name of the module to release (looks like @govuk-one-login/cri-some-module)
+        description:
+          The name of the module to release (looks like @govuk-one-login/cri-some-module, or alternatively '*' for all
+          modules)
         required: true
       first_release:
         type: boolean
@@ -48,7 +50,7 @@ jobs:
       - name: Build the requested package
         env:
           MODULE_NAME: ${{ inputs.module_name }}
-        run: npx nx build "$MODULE_NAME"
+        run: '[[ "$MODULE_NAME" == "*" ]] && npm run build || npx nx build "$MODULE_NAME"'
 
       - name: Fail if we have git changes
         run: git diff --quiet HEAD
