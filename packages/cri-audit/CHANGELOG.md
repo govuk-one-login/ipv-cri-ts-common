@@ -1,3 +1,17 @@
+## 0.2.1 (2025-12-22)
+
+### 🩹 Fixes
+
+- Resolve Sonarcloud code complaints ([734aaee](https://github.com/govuk-one-login/ipv-cri-ts-common/commit/734aaee))
+
+### 🧱 Updated Dependencies
+
+- Updated @govuk-one-login/cri-types to 0.2.0
+
+### ❤️ Thank You
+
+- Barnaby Collins @barnabycollins
+
 ## 0.2.0 (2025-12-19)
 
 ### 🚀 Features
