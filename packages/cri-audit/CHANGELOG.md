@@ -1,3 +1,20 @@
+## 0.2.2 (2025-12-22)
+
+### 🩹 Fixes
+
+- **ci:** Add timeout to SQS integration test ([d35d044](https://github.com/govuk-one-login/ipv-cri-ts-common/commit/d35d044))
+- Improve unit testing config ([f891ff2](https://github.com/govuk-one-login/ipv-cri-ts-common/commit/f891ff2))
+
+### 🧱 Updated Dependencies
+
+- Updated @govuk-one-login/cri-test-resources-helpers to 0.1.2
+- Updated @govuk-one-login/cri-logger to 0.2.1
+- Updated @govuk-one-login/cri-types to 0.2.1
+
+### ❤️ Thank You
+
+- Barnaby Collins @barnabycollins
+
 ## 0.2.1 (2025-12-22)
 
 ### 🩹 Fixes
