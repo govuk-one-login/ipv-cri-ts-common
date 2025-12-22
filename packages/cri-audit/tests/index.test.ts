@@ -103,8 +103,9 @@ describe("buildAndSendAuditEvent()", () => {
     await buildAndSendAuditEvent("queue.com", "my-event", "https://component.account.gov.uk", mockSession);
     expect(sqsMock).toHaveReceivedCommandWith(SendMessageCommand, {
       QueueUrl: "queue.com",
-      MessageBody: expect.stringMatching(
-        /(?=.*"govuk_signin_journey_id":"client-session-id")(?=.*"event_name":"my-event")/,
+      MessageBody: expect.toSatisfy(
+        (msg: string) =>
+          msg.includes(`"govuk_signin_journey_id":"client-session-id"`) && msg.includes(`"event_name":"my-event"`),
       ),
     });
   });
