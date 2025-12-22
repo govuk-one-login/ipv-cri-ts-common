@@ -46,7 +46,7 @@ describe.sequential("SQS integration tests", () => {
     };
   });
 
-  test("Should send audit event to the SQS Client and receive message from the /events endpoint", async () => {
+  test("Should send audit events to SQS", { timeout: 30_000 }, async () => {
     await buildAndSendAuditEvent(QUEUE_URL, eventName, component_id, session);
 
     const records = await pollTestHarnessForEvents(TEST_HARNESS_URL, eventName, sessionId);

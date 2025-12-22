@@ -12,13 +12,16 @@ You can then just run:
 # install correct node version
 nvm install
 
+# use npm v11 if not already installed
+npm install -g npm@11
+
 # install dependencies
 npm install
 
 # install pre-commit git hooks
 pre-commit install
 
-# to install the packages within the repo
+# build packages within the repo (necessary as some depend on others)
 npm run build
 ```
 
