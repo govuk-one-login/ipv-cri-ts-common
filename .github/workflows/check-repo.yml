@@ -117,8 +117,8 @@ jobs:
 
       - name: Run integration tests
         env:
-          SQS_QUEUE_URL: ${{ secrets.SQS_QUEUE_URL }}
-          TEST_HARNESS_EXECUTE_URL: ${{ secrets.TEST_HARNESS_EXECUTE_URL }}
+          SQS_QUEUE_URL: ${{ vars.SQS_QUEUE_URL }}
+          TEST_HARNESS_EXECUTE_URL: ${{ vars.TEST_HARNESS_EXECUTE_URL }}
           AWS_REGION: eu-west-2
         run: npx nx affected -t test:integration
 
