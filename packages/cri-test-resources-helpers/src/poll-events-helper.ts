@@ -1,5 +1,6 @@
 import type { AttributeValue } from "@aws-sdk/client-dynamodb";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
+import { logger } from "@govuk-one-login/cri-logger";
 import { signedFetch } from "./fetch-helper.js";
 
 export interface AuditEventRecord {
@@ -21,15 +22,19 @@ interface UnmarshalledAuditItem {
 export const wait = (seconds: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, seconds * 1000));
 
 async function requestTestHarnessEventsOnce(url: string) {
+  logger.debug(`Calling ${url}`);
+
   const res = await signedFetch(url);
 
   if (!res.ok) {
+    logger.warn(`APIGW response status: ${res.status}.`);
     return null;
   }
 
   const body = await res.json();
 
   if (!Array.isArray(body) || body.length === 0) {
+    logger.debug(`Invalid / empty body: ${JSON.stringify(body)}.`);
     return null;
   }
 
