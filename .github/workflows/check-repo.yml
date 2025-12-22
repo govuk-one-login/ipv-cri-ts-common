@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Pull repository
-        uses: actions/checkout@v6.0.0
+        uses: actions/checkout@v6.0.1
 
       - name: Set up repository
         uses: ./.github/actions/install-and-build
@@ -59,7 +59,7 @@ jobs:
       coverage-artifact-id: ${{ steps.upload-artifacts.outputs.artifact-id }}
     steps:
       - name: Pull repository
-        uses: actions/checkout@v6.0.0
+        uses: actions/checkout@v6.0.1
         with:
           # Required for nx set SHAs: https://github.com/nrwl/nx-set-shas#example-usage
           fetch-depth: 0
@@ -98,7 +98,7 @@ jobs:
     environment: integration-tests
     steps:
       - name: Pull repository
-        uses: actions/checkout@v6.0.0
+        uses: actions/checkout@v6.0.1
         with:
           fetch-depth: 0
           filter: tree:0
