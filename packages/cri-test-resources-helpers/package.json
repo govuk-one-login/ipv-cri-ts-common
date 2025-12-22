@@ -39,5 +39,8 @@
     "@aws-sdk/client-cloudformation": "3.948.0",
     "@aws-sdk/credential-providers": "3.948.0",
     "aws-sigv4-fetch": "4.4.1"
+  },
+  "peerDependencies": {
+    "@govuk-one-login/cri-logger": "0.x"
   }
 }
