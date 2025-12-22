@@ -41,6 +41,6 @@
     "aws-sigv4-fetch": "4.4.1"
   },
   "peerDependencies": {
-    "@govuk-one-login/cri-logger": "0.x"
+    "@govuk-one-login/cri-logger": "0.2.1"
   }
 }

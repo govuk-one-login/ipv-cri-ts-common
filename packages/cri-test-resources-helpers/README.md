@@ -2,7 +2,7 @@
 
 A resources package used to provide helper functions for the integration tests against the `test-resources` stack.
 
-Further information and source code can be found in the
+Further information, changelog and source code can be found in the
 [GitHub repository](https://github.com/govuk-one-login/ipv-cri-ts-common/blob/main/packages/cri-test-resources-helpers).
 
 ## Usage

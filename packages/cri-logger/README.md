@@ -8,7 +8,7 @@ allows us to create a single shared instance of the logger for CRI runtimes. Thi
 logger's context in your consuming code (such as the journey ID and Lambda cold start state) will appear in logs inside
 common CRI modules too.
 
-Further information and source code can be found in the
+Further information, changelog and source code can be found in the
 [GitHub repository](https://github.com/govuk-one-login/ipv-cri-ts-common/blob/main/packages/cri-logger).
 
 ## Module syntax

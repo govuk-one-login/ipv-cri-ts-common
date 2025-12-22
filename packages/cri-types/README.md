@@ -2,7 +2,7 @@
 
 This package exports useful types and interfaces for the development of GOV.UK One Login credential issuers (CRIs).
 
-Further information and source code can be found in the
+Further information, changelog and source code can be found in the
 [GitHub repository](https://github.com/govuk-one-login/ipv-cri-ts-common/blob/main/packages/cri-types).
 
 ## Module syntax
