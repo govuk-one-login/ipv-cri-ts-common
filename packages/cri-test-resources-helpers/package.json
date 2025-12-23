@@ -1,6 +1,6 @@
 {
   "name": "@govuk-one-login/cri-test-resources-helpers",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "description": "",
   "type": "module",
   "license": "MIT",
@@ -41,6 +41,6 @@
     "aws-sigv4-fetch": "4.4.1"
   },
   "peerDependencies": {
-    "@govuk-one-login/cri-logger": "0.2.1"
+    "@govuk-one-login/cri-logger": "1.0.0"
   }
 }

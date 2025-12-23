@@ -1,6 +1,6 @@
 {
   "name": "@govuk-one-login/cri-audit",
-  "version": "0.2.2",
+  "version": "1.0.0",
   "description": "",
   "type": "module",
   "license": "MIT",
@@ -19,11 +19,11 @@
   },
   "peerDependencies": {
     "@aws-sdk/client-sqs": "^3.934.0",
-    "@govuk-one-login/cri-logger": "0.2.1",
-    "@govuk-one-login/cri-types": "0.2.1"
+    "@govuk-one-login/cri-logger": "1.0.0",
+    "@govuk-one-login/cri-types": "1.0.0"
   },
   "devDependencies": {
-    "@govuk-one-login/cri-test-resources-helpers": "0.1.2"
+    "@govuk-one-login/cri-test-resources-helpers": "1.0.0"
   },
   "files": [
     "./dist"

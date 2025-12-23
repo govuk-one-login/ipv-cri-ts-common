@@ -1,3 +1,23 @@
+# 1.0.0 (2025-12-23)
+
+### 🚀 Features
+
+- ⚠️  Release v1 for all packages ([20042f9](https://github.com/govuk-one-login/ipv-cri-ts-common/commit/20042f9))
+
+### ⚠️  Breaking Changes
+
+- ⚠️  Release v1 for all packages ([20042f9](https://github.com/govuk-one-login/ipv-cri-ts-common/commit/20042f9))
+
+### 🧱 Updated Dependencies
+
+- Updated @govuk-one-login/cri-test-resources-helpers to 1.0.0
+- Updated @govuk-one-login/cri-logger to 1.0.0
+- Updated @govuk-one-login/cri-types to 1.0.0
+
+### ❤️ Thank You
+
+- Barnaby Collins @barnabycollins
+
 ## 0.2.2 (2025-12-22)
 
 ### 🩹 Fixes
