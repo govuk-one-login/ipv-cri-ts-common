@@ -27,7 +27,7 @@ repos:
     rev: v0.19.1
     hooks:
       - id: gitlint
-        args: [--contrib=CT1, --ignore=B5, --ignore=B6, --msg-filename]
+        args: [--contrib=CT1, "--ignore=B5,B6", --msg-filename]
   - repo: local
     hooks:
       - id: prettier

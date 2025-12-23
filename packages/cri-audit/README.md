@@ -9,7 +9,7 @@ Audit events are published by pushing to the audit event SQS queue deployed as p
 For a reference on audit event properties, see the
 [GOV.UK One Login event catalogue](https://event-catalogue.internal.account.gov.uk/attributes/).
 
-Further information and source code can be found in the
+Further information, changelog and source code can be found in the
 [GitHub repository](https://github.com/govuk-one-login/ipv-cri-ts-common/blob/main/packages/cri-audit).
 
 ## Usage
