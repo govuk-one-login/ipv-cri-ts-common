@@ -1,6 +1,6 @@
 {
   "name": "@govuk-one-login/cri-audit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "type": "module",
   "license": "MIT",
@@ -23,7 +23,7 @@
     "@govuk-one-login/cri-types": "^1.0.0"
   },
   "devDependencies": {
-    "@govuk-one-login/cri-test-resources-helpers": "1.0.0"
+    "@govuk-one-login/cri-test-resources-helpers": "1.0.1"
   },
   "files": [
     "./dist"

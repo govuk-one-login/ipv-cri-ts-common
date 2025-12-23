@@ -1,3 +1,17 @@
+## 1.0.1 (2025-12-23)
+
+### 🩹 Fixes
+
+- Specify ^1.0.0 version range for peer dependencies ([fe6b967](https://github.com/govuk-one-login/ipv-cri-ts-common/commit/fe6b967))
+
+### 🧱 Updated Dependencies
+
+- Updated @govuk-one-login/cri-test-resources-helpers to 1.0.1
+
+### ❤️ Thank You
+
+- Barnaby Collins @barnabycollins
+
 # 1.0.0 (2025-12-23)
 
 ### 🚀 Features
