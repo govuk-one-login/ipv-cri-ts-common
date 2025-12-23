@@ -19,8 +19,8 @@
   },
   "peerDependencies": {
     "@aws-sdk/client-sqs": "^3.934.0",
-    "@govuk-one-login/cri-logger": "1.0.0",
-    "@govuk-one-login/cri-types": "1.0.0"
+    "@govuk-one-login/cri-logger": "^1.0.0",
+    "@govuk-one-login/cri-types": "^1.0.0"
   },
   "devDependencies": {
     "@govuk-one-login/cri-test-resources-helpers": "1.0.0"
