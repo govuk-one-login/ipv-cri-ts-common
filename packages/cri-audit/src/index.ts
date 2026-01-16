@@ -6,6 +6,8 @@ import { AuditEvent, AuditUser, BaseAuditEvent } from "./types.js";
 
 export { setSqsClient } from "./sqs-client.js";
 
+export * from "./types.js";
+
 export function buildAuditUser(session: SessionItem): AuditUser {
   return {
     govuk_signin_journey_id: session.clientSessionId,
