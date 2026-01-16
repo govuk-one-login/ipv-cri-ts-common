@@ -1,3 +1,13 @@
+## 1.0.2 (2026-01-16)
+
+### 🩹 Fixes
+
+- Export audit types ([4090981](https://github.com/govuk-one-login/ipv-cri-ts-common/commit/4090981))
+
+### ❤️ Thank You
+
+- Mike Beeby
+
 ## 1.0.1 (2025-12-23)
 
 ### 🩹 Fixes
