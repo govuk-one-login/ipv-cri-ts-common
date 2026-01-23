@@ -36,7 +36,7 @@ jobs:
           private-key: ${{ secrets.CRI_PUBLISHER_PRIVATE_KEY }}
 
       - name: Checkout the main branch
-        uses: actions/checkout@v6.0.1
+        uses: actions/checkout@v6.0.2
         with:
           fetch-depth: 0
           filter: tree:0
