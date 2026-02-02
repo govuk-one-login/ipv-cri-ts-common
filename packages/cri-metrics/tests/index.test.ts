@@ -1,0 +1,80 @@
+import { MetricUnit } from "@aws-lambda-powertools/metrics";
+import { beforeEach, describe, expect, it, Mock, vi } from "vitest";
+import { captureLatency, captureMetric } from "../src/index";
+import { metrics } from "../src/metricsClient";
+
+vi.mock("../src/metricsClient", () => ({
+  metrics: {
+    addMetric: vi.fn(),
+    addDimension: vi.fn(),
+    singleMetric: vi.fn().mockReturnValue({
+      addMetric: vi.fn(),
+      addDimension: vi.fn(),
+    }),
+  },
+}));
+
+const mockMetrics = vi.mocked(metrics);
+const mockSingleMetric = metrics.singleMetric();
+
+performance.now = vi.fn();
+
+function waitBeforeReturning<T>(res: T, ms: number): Promise<T> {
+  return new Promise((resolve) => setTimeout(() => resolve(res), ms));
+}
+
+describe("metrics functions", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  describe("captureMetric()", () => {
+    it("captures a single metric correctly", () => {
+      captureMetric("bob");
+
+      expect(mockMetrics.addMetric).toHaveBeenCalledWith("bob", MetricUnit.Count, 1);
+    });
+
+    it("overrides the parameters correctly", () => {
+      captureMetric("grug", 9999999, MetricUnit.TerabytesPerSecond);
+
+      expect(mockMetrics.addMetric).toHaveBeenCalledWith("grug", MetricUnit.TerabytesPerSecond, 9999999);
+    });
+  });
+
+  describe("captureLatency()", () => {
+    it("captures latency correctly", async () => {
+      (performance.now as unknown as Mock).mockReturnValueOnce(1000).mockReturnValueOnce(1141.999);
+
+      const res = await captureLatency("zoomies", () => waitBeforeReturning("good!", 80));
+
+      expect(res).toStrictEqual({ result: "good!", latencyInMs: 141 });
+
+      expect(mockSingleMetric.addDimension).toHaveBeenCalledWith("HTTP", "zoomies");
+      expect(mockSingleMetric.addMetric).toHaveBeenCalledWith("ResponseLatency", MetricUnit.Milliseconds, 141);
+    });
+
+    it("handles generic return types correctly", async () => {
+      (performance.now as unknown as Mock).mockReturnValueOnce(1).mockReturnValueOnce(5.999);
+
+      const theCoolback = () =>
+        waitBeforeReturning({ blah: 9, go: true, success: "maybe", thing: { stuff: false } }, 50);
+
+      // The return type should be derived from the callback's return type.
+      // If it is not, the type provided for res will cause a type error during
+      // test compilation because captureLatency is returning something else.
+      const res: {
+        result: { blah: number; go: boolean; success: string; thing: { stuff: boolean } };
+        latencyInMs: number;
+      } = await captureLatency("big obj", theCoolback);
+
+      expect(res).toStrictEqual({
+        result: { blah: 9, go: true, success: "maybe", thing: { stuff: false } },
+        latencyInMs: 4,
+      });
+
+      expect(mockSingleMetric.addDimension).toHaveBeenCalledWith("HTTP", "big obj");
+      expect(mockSingleMetric.addMetric).toHaveBeenCalledWith("ResponseLatency", MetricUnit.Milliseconds, 4);
+    });
+  });
+});
