@@ -95,22 +95,22 @@ In this section:
 It's important to think carefully about how we include dependencies. In many cases, we want to be certain that the
 package consumer's source code is using the same package version as the package itself. This brings two benefits:
 
-- the package consumer retains control over the version that is installed, so we can do version bumps on external
-  dependencies without needing to update the packages in this repo.
+- the package consumer retains control over the version that is installed, so they can do version bumps on external
+  dependencies without needing to re-publish the packages in this repo.
 - the package consumer uses the same instance of the dependency - this can be important where:
   - the dependency exports some stateful component that's used in both the package and the consumer
   - the dependency exports types that are part of the package's interface and therefore could be affected by version
     mismatches
 
 This can be achieved using the `peerDependencies` field in the package's `package.json` manifest. Using
-`peerDependencies` means the consumer is required to manually install that dependency, subject to a compatible version
-range that we specify, and therefore the same package version will also be available to the consumer's code.
+`peerDependencies` means the consumer is required to provide that dependency, subject to a compatible version range that
+we specify, and therefore the same dependency version will also be available to the consumer's code.
 
 Examples where this technique would be useful include `@govuk-one-login/cri-logger` (which exports a stateful class
 instance) and `@aws-sdk/client-*` (which is updated regularly and may be needed in the consumer code too). By contrast,
-it would be preferable to just specify the dependency in the package's `dependencies` field when the dependency is
-completely internal to the package, and unlikely to also be used by the consumer - for example, a JWT verifier package
-that uses `jose` functions internally.
+it could be preferable to just specify the dependency in the package's `dependencies` field when the dependency is
+completely internal to the package, won't need regular version bumps / vulnerability fixes, and is unlikely to also be
+used by the consumer.
 
 Only specifying the dependency in `peerDependencies` means the given dependency is not installed when working in this
 repository. This is solved by also specifying the dependency in the root `devDependencies` field, where we can control
