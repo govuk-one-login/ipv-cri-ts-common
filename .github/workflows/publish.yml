@@ -11,7 +11,9 @@ on:
         required: true
       first_release:
         type: boolean
-        description: Is this the first release of the module?
+        description:
+          Is this the first release of the module? (If so, make sure v0 has already been manually released to npm and
+          OIDC configured)
         required: true
 
 permissions:
