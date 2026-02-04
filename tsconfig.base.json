@@ -24,6 +24,9 @@
 
     "forceConsistentCasingInFileNames": true,
 
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+
     // monorepo
     "composite": true
   }

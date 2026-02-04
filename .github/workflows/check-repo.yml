@@ -109,6 +109,9 @@ jobs:
       - name: Set the base and head SHAs for the nx affected commands in CI
         uses: nrwl/nx-set-shas@3e9ad7370203c1e93d109be57f3b72eb0eb511b1 # v4.4.0
 
+      - name: Install SAM CLI
+        uses: aws-actions/setup-sam@c2a20b1822cc4a6bc594ff7f1dbb658758e383c3 # v2
+
       - name: Assume AWS Role
         uses: aws-actions/configure-aws-credentials@61815dcd50bd041e203e49132bacad1fd04d2708 # v5.1.1
         with:
@@ -120,7 +123,7 @@ jobs:
           SQS_QUEUE_URL: ${{ vars.SQS_QUEUE_URL }}
           TEST_HARNESS_EXECUTE_URL: ${{ vars.TEST_HARNESS_EXECUTE_URL }}
           AWS_REGION: eu-west-2
-        run: npx nx affected -t test:integration
+        run: STACK_IDENTIFIER=${GITHUB_SHA:0:8} npx nx affected -t test:integration
 
   sonarcloud:
     name: Sonarcloud

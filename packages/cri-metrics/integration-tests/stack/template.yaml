@@ -1,0 +1,43 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform:
+  - AWS::Serverless-2016-10-31
+Description: "ipv-cri-ts-common cri-metrics integration test stack"
+
+Parameters:
+  RunId:
+    Type: String
+    Description: A short random string that uniquely identifies this run.
+
+Globals:
+  Function:
+    Timeout: 30 # seconds
+    Architectures:
+      - arm64
+
+Resources:
+  TestFunction:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Target: "node22"
+        EntryPoints:
+          - index.ts
+        Minify: false
+    Properties:
+      FunctionName: !Sub "${AWS::StackName}-TestFn"
+      CodeUri: ./handler
+      Handler: index.handler
+      Runtime: nodejs22.x
+      Environment:
+        Variables:
+          POWERTOOLS_METRICS_NAMESPACE: TSCommon-Metrics-IntegrationTests
+          POWERTOOLS_SERVICE_NAME: !Sub "${AWS::StackName}-TestFunction-${RunId}"
+      Policies:
+        - AWSLambdaBasicExecutionRole
+
+  TestFunctionLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${TestFunction}"
+      RetentionInDays: 7

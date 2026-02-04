@@ -146,3 +146,9 @@ vite.config.ts.timestamp-*
 
 # used when bootstrapping a package in npm
 publish-temp
+
+# vscode project configuration
+.vscode
+
+# built SAM templates
+.aws-sam

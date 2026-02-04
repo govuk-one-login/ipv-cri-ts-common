@@ -168,3 +168,30 @@ setServiceAClient(customClient);
 // this will now use the custom client under the hood
 await doPackageFunction();
 ```
+
+## Integration tests
+
+Most integration tests require interaction with remote resources in AWS. In order to authenticate with AWS to do this,
+we suggest using the AWS CLI's SSO utility. Once a profile has been set up for the cri-common-dev account, the following
+can be used to provide the credentials to the integration tests:
+
+```sh
+export AWS_PROFILE=your-profile-name
+aws sso login
+STACK_IDENTIFIER=something npm run test:integration
+```
+
+The `STACK_IDENTIFIER` parameter is used to uniquely identify any AWS resources deployed as part of your integration
+test run.
+
+Any created resources will be torn down after the execution as it stands, though we want to be clear that this is not a
+firm long-term design commitment or widely agreed standard. Tearing down the stacks immediately brings the benefit of
+self-contained and atomic tests across the monorepo, and avoids stacks hanging around unnecessarily, but also carries
+downsides such as the loss of Lambda logs on deletion and inconsistency with other repositories that deploy a single,
+more complex, stack. In the case where integration tests fail, the recommended approach is to disable the delete step
+for that package and run the test again, either locally or in CI. We chose not to pull down Lambda logs or errors into
+GitHub Actions because this may carry risks if some AWS credential or other secret(s) is/are accidentally logged during
+execution.
+
+Note that some packages (eg `cri-audit`) need additional environment variables for integration testing. These should be
+made clear in an error at runtime if missing.
