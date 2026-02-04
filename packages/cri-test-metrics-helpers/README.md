@@ -3,11 +3,6 @@
 This package provides functionality which can be used to retrieve metrics from AWS CloudWatch. It is intended for use in
 integration testing.
 
-> [!WARNING]
->
-> This package is in a pre-release state and its interface may change without warning. Once it's ready for release, this
-> block should be removed and a `feat!` commit message used to create a major version bump.
-
 Further information and source code can be found in the
 [GitHub repository](https://github.com/govuk-one-login/ipv-cri-ts-common/blob/main/packages/cri-test-metrics-helpers).
 

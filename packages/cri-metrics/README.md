@@ -3,11 +3,6 @@
 This package exports a number of basic utilities for use when publishing AWS CloudWatch metrics in GOV.UK One Login's
 credential issuers (CRIs).
 
-> [!WARNING]
->
-> This package is in a pre-release state and its interface may change without warning. Once it's ready for release, this
-> block should be removed and a `feat!` commit message used to create a major version bump.
-
 Further information and source code can be found in the
 [GitHub repository](https://github.com/govuk-one-login/ipv-cri-ts-common/blob/main/packages/cri-metrics).
 
