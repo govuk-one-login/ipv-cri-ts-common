@@ -55,11 +55,11 @@ export async function pollForMetrics<QueryId extends string>(
 ) {
   const cloudwatchClient = new CloudWatchClient();
 
-  const fiveMinutesAgo = new Date((Math.floor(Date.now() / 60000) - 10) * 60000);
+  const tenMinutesAgo = new Date((Math.floor(Date.now() / 60000) - 10) * 60000);
   const endOfCurrentMinute = new Date(Math.ceil(Date.now() / 60000) * 60000);
 
   const getMetricsCommand = new GetMetricDataCommand({
-    StartTime: fiveMinutesAgo,
+    StartTime: tenMinutesAgo,
     EndTime: endOfCurrentMinute,
     MetricDataQueries: metrics.map((m) => ({
       Id: m.queryId,
