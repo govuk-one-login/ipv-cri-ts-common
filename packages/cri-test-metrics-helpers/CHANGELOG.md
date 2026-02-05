@@ -1,3 +1,13 @@
+## 1.0.1 (2026-02-05)
+
+### 🩹 Fixes
+
+- Correct variable name ([9e28d07](https://github.com/govuk-one-login/ipv-cri-ts-common/commit/9e28d07))
+
+### ❤️ Thank You
+
+- Barnaby Collins @barnabycollins
+
 # 1.0.0 (2026-02-04)
 
 ### 🚀 Features
