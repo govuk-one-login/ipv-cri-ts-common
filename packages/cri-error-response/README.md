@@ -10,11 +10,6 @@ converted into a standardised API response.
 We intentionally provide a single `CriError` instead of many custom error types to keep the library lightweight and
 clearly signal expected failures with an explicit HTTP status code and safe client-facing message.
 
-> [!WARNING]
->
-> This package is in a pre-release state and its interface may change without warning. Once it's ready for release, this
-> block should be removed and a `feat!` commit message used to create a major version bump.
-
 Further information and source code can be found in the
 [GitHub repository](https://github.com/govuk-one-login/ipv-cri-ts-common/blob/main/packages/cri-error-response).
 
