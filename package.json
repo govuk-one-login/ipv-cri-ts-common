@@ -32,7 +32,6 @@
     "@aws-sdk/client-lambda": "3.1002.0",
     "@aws-sdk/client-sqs": "3.1002.0",
     "@aws-sdk/credential-providers": "3.1002.0",
-    "@aws-sdk/lib-dynamodb": "3.1002.0",
     "@aws-sdk/util-dynamodb": "3.996.1",
     "@eslint/js": "9.39.1",
     "@nx/js": "22.5.4",
