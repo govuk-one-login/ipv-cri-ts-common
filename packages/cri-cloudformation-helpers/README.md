@@ -9,9 +9,9 @@ Further information, changelog and source code can be found in the
 
 The following functions are exported:
 
-| Function         | Purpose                                                                                                                |
-| ---------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `stackOutputs()` | Uses the aws-helper to query the AWS Cloudformation stack by its name and return the outputs associated to that stack. |
+| Function         | Purpose                                                                                            |
+| ---------------- | -------------------------------------------------------------------------------------------------- |
+| `stackOutputs()` | Queries the AWS Cloudformation stack by its name and returns the outputs associated to that stack. |
 
 ## Module syntax
 

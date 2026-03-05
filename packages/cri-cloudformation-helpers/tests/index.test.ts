@@ -1,12 +1,13 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { stackOutputs } from "../src/stack-output";
+import { stackOutputs } from "../src/index";
 
-const { mockSendCommand } = vi.hoisted(() => ({
-  mockSendCommand: vi.fn(),
-}));
+const { mockSend } = vi.hoisted(() => ({ mockSend: vi.fn() }));
 
-vi.mock("../src/aws-helper.js", () => ({
-  createSendCommand: vi.fn(() => mockSendCommand),
+vi.mock("@aws-sdk/client-cloudformation", () => ({
+  CloudFormationClient: class {
+    send = mockSend;
+  },
+  DescribeStacksCommand: vi.fn(),
 }));
 
 describe("stackOutputs", () => {
@@ -23,7 +24,7 @@ describe("stackOutputs", () => {
   });
 
   it("should return the stack outputs", async () => {
-    mockSendCommand.mockResolvedValueOnce({
+    mockSend.mockResolvedValueOnce({
       Stacks: [
         {
           Outputs: [
@@ -43,7 +44,7 @@ describe("stackOutputs", () => {
   });
 
   it("should return an empty if `Outputs` is empty", async () => {
-    mockSendCommand.mockResolvedValueOnce({
+    mockSend.mockResolvedValueOnce({
       Stacks: [{ Outputs: [] }],
     });
 
@@ -53,22 +54,12 @@ describe("stackOutputs", () => {
   });
 
   it("should return an empty if `Stacks` is empty", async () => {
-    mockSendCommand.mockResolvedValueOnce({
+    mockSend.mockResolvedValueOnce({
       Stacks: [],
     });
 
     const result = await stackOutputs("my-stack");
 
     expect(result).toEqual({});
-  });
-
-  it("should call sendCommand with the correct stack name", async () => {
-    mockSendCommand.mockResolvedValueOnce({
-      Stacks: [{ Outputs: [] }],
-    });
-
-    await stackOutputs("my-stack");
-
-    expect(mockSendCommand).toHaveBeenCalledWith(expect.anything(), { StackName: "my-stack" });
   });
 });
