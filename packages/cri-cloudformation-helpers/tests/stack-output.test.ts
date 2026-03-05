@@ -42,6 +42,26 @@ describe("stackOutputs", () => {
     });
   });
 
+  it("should return an empty if `Outputs` is empty", async () => {
+    mockSendCommand.mockResolvedValueOnce({
+      Stacks: [{ Outputs: [] }],
+    });
+
+    const result = await stackOutputs("my-stack");
+
+    expect(result).toEqual({});
+  });
+
+  it("should return an empty if `Stacks` is empty", async () => {
+    mockSendCommand.mockResolvedValueOnce({
+      Stacks: [],
+    });
+
+    const result = await stackOutputs("my-stack");
+
+    expect(result).toEqual({});
+  });
+
   it("should call sendCommand with the correct stack name", async () => {
     mockSendCommand.mockResolvedValueOnce({
       Stacks: [{ Outputs: [] }],
