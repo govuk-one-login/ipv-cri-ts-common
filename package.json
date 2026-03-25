@@ -44,7 +44,7 @@
     "aws-sdk-client-mock": "4.1.0",
     "aws-sdk-client-mock-vitest": "7.0.1",
     "aws-sigv4-fetch": "4.4.1",
-    "eslint": "9.39.3",
+    "eslint": "10.1.0",
     "eslint-config-prettier": "10.1.8",
     "npm-run-all2": "8.0.4",
     "nx": "22.5.4",
