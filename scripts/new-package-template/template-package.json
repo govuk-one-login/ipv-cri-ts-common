@@ -14,7 +14,8 @@
     "build:esm": "npx tsc --outDir dist/esm",
     "build": "npm run build:esm && npm run build:cjs",
     "test": "npx vitest run",
-    "test:coverage": "npx vitest run --coverage"
+    "test:coverage": "npx vitest run --coverage",
+    "lint": "npx eslint"
   },
   "files": ["./dist"],
   "module": "./dist/esm/index.js",

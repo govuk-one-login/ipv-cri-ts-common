@@ -5,21 +5,35 @@ import globals from "globals";
 import tseslint from "typescript-eslint";
 
 export default defineConfig(
-  eslint.configs.recommended,
-  tseslint.configs.recommendedTypeChecked,
-  tseslint.configs.stylisticTypeChecked,
-  prettiereslint, // disables ESLint rules that might conflict with prettier
   {
-    files: ["**/src/**/*"], // only apply to source code
+    ignores: [
+      ".nx/**/*",
+      "eslint.config.mjs",
+      "**/coverage/**/*",
+      "**/dist/**/*",
+      "**/.aws-sam/**/*",
+      "**/vitest.config.ts",
+    ],
+  },
+  {
+    files: ["**/*.{js,cjs,mjs,ts}"],
+    languageOptions: {
+      globals: globals.node,
+    },
+  },
+  eslint.configs.recommended,
+  {
+    files: ["**/*.ts"], // only apply to source code
     languageOptions: {
       parserOptions: {
         projectService: true,
       },
-      globals: globals.node,
     },
+    extends: [...tseslint.configs.recommendedTypeChecked, ...tseslint.configs.stylisticTypeChecked],
   },
   {
-    files: ["**/tests/**/*"],
+    files: ["**/*.test.ts", "**/*.spec.ts", "**/tests/**/*", "**/integration-tests/**/*"],
     extends: [tseslint.configs.disableTypeChecked],
   },
+  prettiereslint, // disables ESLint rules that might conflict with prettier
 );

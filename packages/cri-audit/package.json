@@ -15,6 +15,7 @@
     "build": "npm run build:esm && npm run build:cjs",
     "test": "npx vitest run",
     "test:coverage": "npx vitest run --coverage",
+    "lint": "npx eslint",
     "test:integration": "npx vitest run --config integration-tests/vitest.config.ts"
   },
   "peerDependencies": {

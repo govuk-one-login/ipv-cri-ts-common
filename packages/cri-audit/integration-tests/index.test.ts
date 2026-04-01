@@ -4,10 +4,10 @@ import { SessionItem, UnixMillisecondsTimestamp, UnixSecondsTimestamp } from "@g
 import { randomUUID } from "node:crypto";
 import { beforeEach, describe, expect, test } from "vitest";
 
-type Event = {
+interface Event {
   event_name: string;
   [key: string]: unknown;
-};
+}
 
 const QUEUE_URL = process.env.SQS_QUEUE_URL;
 

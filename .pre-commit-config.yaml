@@ -46,8 +46,8 @@ repos:
       - id: eslint
         name: ESLint
         language: system
-        files: ^.+/(?:src|tests)/.+\.[jt]sx?$
-        entry: npx eslint
+        files: .[jt]sx?$
+        entry: npm run lint
 
 default_install_hook_types:
   - pre-commit

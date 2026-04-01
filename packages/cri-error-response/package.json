@@ -14,7 +14,8 @@
     "build:esm": "npx tsc --outDir dist/esm",
     "build": "npm run build:esm && npm run build:cjs",
     "test": "npx vitest run",
-    "test:coverage": "npx vitest run --coverage"
+    "test:coverage": "npx vitest run --coverage",
+    "lint": "npx eslint"
   },
   "peerDependencies": {
     "@govuk-one-login/cri-logger": "^1.0.0"

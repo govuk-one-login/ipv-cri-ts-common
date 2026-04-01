@@ -33,7 +33,7 @@
     "@aws-sdk/client-sqs": "3.1002.0",
     "@aws-sdk/credential-providers": "3.1002.0",
     "@aws-sdk/util-dynamodb": "3.996.1",
-    "@eslint/js": "9.39.1",
+    "@eslint/js": "10.0.1",
     "@nx/js": "22.5.4",
     "@swc-node/register": "1.11.1",
     "@swc/core": "1.15.18",
@@ -44,8 +44,9 @@
     "aws-sdk-client-mock": "4.1.0",
     "aws-sdk-client-mock-vitest": "7.0.1",
     "aws-sigv4-fetch": "4.4.1",
-    "eslint": "9.39.3",
+    "eslint": "10.1.0",
     "eslint-config-prettier": "10.1.8",
+    "globals": "17.4.0",
     "npm-run-all2": "8.0.4",
     "nx": "22.5.4",
     "prettier": "3.6.2",
@@ -53,7 +54,7 @@
     "prettier-plugin-organize-imports": "4.3.0",
     "prettier-plugin-sh": "0.18.0",
     "typescript": "5.9.3",
-    "typescript-eslint": "8.56.1",
+    "typescript-eslint": "8.58.0",
     "vitest": "4.0.9"
   }
 }

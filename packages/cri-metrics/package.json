@@ -15,6 +15,7 @@
     "build": "npm run build:esm && npm run build:cjs",
     "test": "npx vitest run",
     "test:coverage": "npx vitest run --coverage",
+    "lint": "npx eslint",
     "test:integration:deploy": "./integration-tests/deploy.sh",
     "test:integration:run": "npx vitest run --config integration-tests/vitest.config.ts",
     "test:integration:clean": "./integration-tests/clean.sh",
