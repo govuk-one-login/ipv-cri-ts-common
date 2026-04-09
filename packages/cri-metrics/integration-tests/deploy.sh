@@ -6,6 +6,10 @@ echo "Run ID: $RUN_ID"
 
 sam validate -t integration-tests/stack/template.yaml --lint
 
+if ! command -v esbuild &> /dev/null; then
+  npm install -g esbuild
+fi
+
 sam build -t integration-tests/stack/template.yaml
 
 sam deploy --stack-name $STACK_NAME \

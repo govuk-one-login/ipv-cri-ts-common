@@ -13,9 +13,10 @@ runs:
         cache: npm
         node-version: 22
 
+      # Remove pin once npm/cli#9151 is fixed
     - name: Install npm 11
       shell: bash
-      run: npm install -g npm@11
+      run: npm install -g npm@11.11.1
 
     - name: Install dependencies
       shell: bash
