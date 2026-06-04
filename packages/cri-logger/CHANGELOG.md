@@ -1,3 +1,13 @@
+## 1.1.0 (2026-06-04)
+
+### 🚀 Features
+
+- **logger:** export injectLambdaContext middleware api ([dc21bc8](https://github.com/govuk-one-login/ipv-cri-ts-common/commit/dc21bc8))
+
+### ❤️ Thank You
+
+- Nathaniel Steers
+
 ## 1.0.1 (2026-02-04)
 
 This was a version bump only for @govuk-one-login/cri-logger to align it with other projects, there were no code changes.

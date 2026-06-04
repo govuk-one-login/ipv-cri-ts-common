@@ -1,3 +1,23 @@
+## 1.0.2 (2026-06-04)
+
+### 🚀 Features
+
+- **metrics:** export logMetrics middleware api ([4b120c9](https://github.com/govuk-one-login/ipv-cri-ts-common/commit/4b120c9))
+
+### 🩹 Fixes
+
+- Install esbuild in metrics integration tests script ([f3e8653](https://github.com/govuk-one-login/ipv-cri-ts-common/commit/f3e8653))
+
+### 🧱 Updated Dependencies
+
+- Updated @govuk-one-login/cri-test-metrics-helpers to 1.0.2
+- Updated @govuk-one-login/cri-logger to 1.1.0
+
+### ❤️ Thank You
+
+- Mike Beeby
+- Nathaniel Steers
+
 ## 1.0.1 (2026-02-05)
 
 ### 🧱 Updated Dependencies

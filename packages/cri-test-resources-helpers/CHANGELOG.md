@@ -1,3 +1,9 @@
+## 1.0.3 (2026-06-04)
+
+### 🧱 Updated Dependencies
+
+- Updated @govuk-one-login/cri-logger to 1.1.0
+
 ## 1.0.2 (2026-02-04)
 
 ### 🧱 Updated Dependencies
