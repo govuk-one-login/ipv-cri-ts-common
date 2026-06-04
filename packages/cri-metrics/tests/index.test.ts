@@ -1,7 +1,6 @@
 import { MetricUnit } from "@aws-lambda-powertools/metrics";
 import { beforeEach, describe, expect, it, Mock, vi } from "vitest";
-import { captureLatency, captureMetric } from "../src/index";
-import { metrics } from "../src/metricsClient";
+import { captureLatency, captureMetric, metrics } from "../src";
 
 vi.mock("../src/metricsClient", () => ({
   metrics: {

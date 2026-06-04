@@ -1,8 +1,6 @@
 import { MetricUnit } from "@aws-lambda-powertools/metrics";
 import { MetricUnit as MetricUnitType } from "@aws-lambda-powertools/metrics/types";
 import { metrics } from "./metricsClient.js";
-export { MetricUnit } from "@aws-lambda-powertools/metrics";
-export { metrics } from "./metricsClient.js";
 
 const HTTP_METRIC_DIMENSION = "HTTP";
 const RESPONSE_LATENCY_METRIC = "ResponseLatency";
@@ -28,3 +26,7 @@ export async function captureLatency<T>(
 
   return { result, latencyInMs };
 }
+
+export { MetricUnit } from "@aws-lambda-powertools/metrics";
+export { logMetrics } from "@aws-lambda-powertools/metrics/middleware";
+export { metrics } from "./metricsClient.js";
