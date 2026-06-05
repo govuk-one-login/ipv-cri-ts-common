@@ -1,3 +1,13 @@
+## 1.0.3 (2026-06-05)
+
+### 🚀 Features
+
+- **metrics:** capture metrics with custom dimensions ([b00f6b9](https://github.com/govuk-one-login/ipv-cri-ts-common/commit/b00f6b9))
+
+### ❤️ Thank You
+
+- Nathaniel Steers
+
 ## 1.0.2 (2026-06-04)
 
 ### 🚀 Features
