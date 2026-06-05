@@ -1,6 +1,6 @@
 import { MetricUnit } from "@aws-lambda-powertools/metrics";
 import { beforeEach, describe, expect, it, Mock, vi } from "vitest";
-import { captureLatency, captureMetric, metrics } from "../src";
+import { captureLatency, captureMetric, captureMetricWithDimensions, metrics } from "../src";
 
 vi.mock("../src/metricsClient", () => ({
   metrics: {
@@ -38,6 +38,25 @@ describe("metrics functions", () => {
       captureMetric("grug", 9999999, MetricUnit.TerabytesPerSecond);
 
       expect(mockMetrics.addMetric).toHaveBeenCalledWith("grug", MetricUnit.TerabytesPerSecond, 9999999);
+    });
+  });
+
+  describe("captureMetricWithDimensions()", () => {
+    it("captures a metric with dimensions using defaults", () => {
+      captureMetricWithDimensions("bob", { Region: "eu-west-2" });
+
+      expect(mockMetrics.singleMetric).toHaveBeenCalled();
+      expect(mockSingleMetric.addDimension).toHaveBeenCalledWith("Region", "eu-west-2");
+      expect(mockSingleMetric.addMetric).toHaveBeenCalledWith("bob", MetricUnit.Count, 1);
+      expect(mockMetrics.addMetric).not.toHaveBeenCalled();
+    });
+
+    it("applies every dimension and overrides value and unit", () => {
+      captureMetricWithDimensions("grug", { Service: "OB", Strategy: "UAT" }, 42, MetricUnit.Milliseconds);
+
+      expect(mockSingleMetric.addDimension).toHaveBeenCalledWith("Service", "OB");
+      expect(mockSingleMetric.addDimension).toHaveBeenCalledWith("Strategy", "UAT");
+      expect(mockSingleMetric.addMetric).toHaveBeenCalledWith("grug", MetricUnit.Milliseconds, 42);
     });
   });
 

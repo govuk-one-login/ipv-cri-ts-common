@@ -9,6 +9,17 @@ export function captureMetric(name: string, value = 1, unit: MetricUnitType = Me
   metrics.addMetric(name, unit, value);
 }
 
+export function captureMetricWithDimensions(
+  name: string,
+  dimensions: Record<string, string>,
+  value = 1,
+  unit: MetricUnitType = MetricUnit.Count,
+) {
+  const m = metrics.singleMetric();
+  for (const [k, v] of Object.entries(dimensions)) m.addDimension(k, v);
+  m.addMetric(name, unit, value);
+}
+
 export async function captureLatency<T>(
   name: string,
   callback: () => Promise<T>,
