@@ -43,6 +43,17 @@ describe("Invoke function & check metrics", { timeout: 300_000 }, () => {
         unit: "Gigabytes",
       },
       {
+        queryId: "metric3",
+        namespace: "TSCommon-Metrics-IntegrationTests",
+        metricName: "Metric3",
+        dimensions: {
+          service: serviceName,
+          Region: "eu-west-2",
+          Strategy: "UAT",
+        },
+        unit: "Megabytes",
+      },
+      {
         queryId: "responseLatency",
         namespace: "TSCommon-Metrics-IntegrationTests",
         metricName: "ResponseLatency",
@@ -57,6 +68,7 @@ describe("Invoke function & check metrics", { timeout: 300_000 }, () => {
     expect(result.coldStart).toBeGreaterThanOrEqual(1);
     expect(result.metric1).toBeGreaterThanOrEqual(1);
     expect(result.metric2).toBeGreaterThanOrEqual(5);
+    expect(result.metric3).toBeGreaterThanOrEqual(7);
     expect(result.responseLatency).toBeGreaterThan(1400);
   });
 });

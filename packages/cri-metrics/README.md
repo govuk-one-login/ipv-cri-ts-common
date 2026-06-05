@@ -25,11 +25,12 @@ Further information and source code can be found in the
 
 The following functions are exported:
 
-| Utility            | Purpose                                                                                                                                                                    |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `captureMetric()`  | Captures a metric with a given name, and optional value and unit. NB: Metrics captured this way must be flushed at the end of the Lambda execution.                        |
-| `captureLatency()` | Executes a callback, measures the time taken and publishes a metric with the response time. The latency metric is a `singleMetric` and is therefore flushed straight away. |
-| `metrics`          | The underlying Lambda Powertools instance. Use this to configure the underlying Powertools module, most importantly by configuring the flushing of metrics.                |
+| Utility                         | Purpose                                                                                                                                                                    |
+| ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `captureMetric()`               | Captures a metric with a given name, and optional value and unit. NB: Metrics captured this way must be flushed at the end of the Lambda execution.                        |
+| `captureMetricWithDimensions()` | Captures a metric with a given name, dimensions, and optional value and unit. The metric is a `singleMetric` and is therefore flushed straight away.                       |
+| `captureLatency()`              | Executes a callback, measures the time taken and publishes a metric with the response time. The latency metric is a `singleMetric` and is therefore flushed straight away. |
+| `metrics`                       | The underlying Lambda Powertools instance. Use this to configure the underlying Powertools module, most importantly by configuring the flushing of metrics.                |
 
 ## Module syntax
 
