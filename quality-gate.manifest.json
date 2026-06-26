@@ -14,7 +14,7 @@
           "provider": "GitHub",
           "config": {
             "file": ".github/workflows/check-repo.yml",
-            "path": "$.jobs.run-pre-commit"
+            "path": "$.jobs.pre-commit"
           }
         },
         {
