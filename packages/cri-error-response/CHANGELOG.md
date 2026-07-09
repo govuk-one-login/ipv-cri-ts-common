@@ -1,3 +1,13 @@
+## 1.0.2 (2026-07-09)
+
+### 🩹 Fixes
+
+- Resolve log message bug ([3e3bbb2](https://github.com/govuk-one-login/ipv-cri-ts-common/commit/3e3bbb2))
+
+### ❤️ Thank You
+
+- Mike Beeby
+
 ## 1.0.1 (2026-06-04)
 
 ### 🧱 Updated Dependencies
