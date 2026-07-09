@@ -52,8 +52,7 @@ describe("formatErrorResponse", () => {
     formatErrorResponse(err);
 
     expect(logger.error).toHaveBeenCalledTimes(1);
-    expect(logger.error).toHaveBeenCalledWith("CriError", {
-      message: "Bad request",
+    expect(logger.error).toHaveBeenCalledWith("CriError: Bad request", {
       statusCode: 400,
       internalCode: "CRI_ERROR",
     });
@@ -65,8 +64,7 @@ describe("formatErrorResponse", () => {
     formatErrorResponse(err);
 
     expect(logger.error).toHaveBeenCalledTimes(1);
-    expect(logger.error).toHaveBeenCalledWith("CriError", {
-      message: "Bad request",
+    expect(logger.error).toHaveBeenCalledWith("CriError: Bad request", {
       statusCode: 400,
       internalCode: "JWT_VERIFICATION_FAILED",
     });
@@ -78,8 +76,7 @@ describe("formatErrorResponse", () => {
     formatErrorResponse(err);
 
     expect(logger.error).toHaveBeenCalledTimes(1);
-    expect(logger.error).toHaveBeenCalledWith("CriError", {
-      message: "Runtime Error",
+    expect(logger.error).toHaveBeenCalledWith("CriError: Runtime Error", {
       statusCode: 500,
       internalCode: "CRI_ERROR",
     });
@@ -91,8 +88,7 @@ describe("formatErrorResponse", () => {
     formatErrorResponse(err);
 
     expect(logger.error).toHaveBeenCalledTimes(1);
-    expect(logger.error).toHaveBeenCalledWith("CriError", {
-      message: "Runtime Error",
+    expect(logger.error).toHaveBeenCalledWith("CriError: Runtime Error", {
       statusCode: 503,
       internalCode: "RUNTIME_ERROR",
     });
@@ -107,9 +103,8 @@ describe("formatErrorResponse", () => {
     expect(response.headers).toEqual({ "Content-Type": "application/json" });
 
     expect(logger.error).toHaveBeenCalledTimes(1);
-    expect(logger.error).toHaveBeenCalledWith("Unhandled Error", {
-      message: "redacted",
-      name: "Error",
+    expect(logger.error).toHaveBeenCalledWith("Unhandled Error: Error", {
+      errorMessage: "redacted",
       stack: "redacted",
     });
   });
@@ -119,8 +114,7 @@ describe("formatErrorResponse", () => {
     expect(response.statusCode).toBe(500);
     expect(response.body).toBe('{"message":"Internal server error"}');
     expect(response.headers).toEqual({ "Content-Type": "application/json" });
-    expect(logger.error).toHaveBeenCalledWith("Unhandled Error", {
-      message: "Non Error type thrown",
+    expect(logger.error).toHaveBeenCalledWith("Unhandled Error: Non Error type thrown", {
       type: "object",
     });
   });
@@ -130,8 +124,7 @@ describe("formatErrorResponse", () => {
     expect(response.statusCode).toBe(500);
     expect(response.body).toBe('{"message":"Internal server error"}');
     expect(response.headers).toEqual({ "Content-Type": "application/json" });
-    expect(logger.error).toHaveBeenCalledWith("Unhandled Error", {
-      message: "Non Error type thrown",
+    expect(logger.error).toHaveBeenCalledWith("Unhandled Error: Non Error type thrown", {
       type: "string",
     });
   });
@@ -143,9 +136,8 @@ describe("formatErrorResponse", () => {
     expect(response.statusCode).toBe(500);
     expect(response.body).toBe('{"message":"Internal server error"}');
     expect(response.headers).toEqual({ "Content-Type": "application/json" });
-    expect(logger.error).toHaveBeenCalledWith("Unhandled Error", {
-      message: "Unhandled",
-      name: "Error",
+    expect(logger.error).toHaveBeenCalledWith("Unhandled Error: Error", {
+      errorMessage: "Unhandled",
       stack: expect.stringMatching(/^Error: Unhandled\n\s+at /),
     });
   });
