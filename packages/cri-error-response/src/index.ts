@@ -7,7 +7,7 @@ const DEFAULT_HEADERS = { "Content-Type": "application/json" };
 
 export function formatErrorResponse(err: unknown) {
   if (err instanceof CriError) {
-    logger.error("CriError", { message: err.message, statusCode: err.statusCode, internalCode: err.internalCode });
+    logger.error(`CriError: ${err.message}`, { statusCode: err.statusCode, internalCode: err.internalCode });
 
     const clientMessage = err.statusCode >= 500 ? "Internal server error" : err.message;
 
@@ -18,7 +18,7 @@ export function formatErrorResponse(err: unknown) {
     };
   }
 
-  logger.error("Unhandled Error", safeSerializeError(err));
+  logUnhandledError(err);
   return {
     statusCode: 500,
     headers: DEFAULT_HEADERS,
@@ -26,18 +26,17 @@ export function formatErrorResponse(err: unknown) {
   };
 }
 
-function safeSerializeError(error: unknown) {
+function logUnhandledError(error: unknown): void {
   const LOG_FULL_ERRORS = process.env["LOG_FULL_ERRORS"] === "true";
-  if (error instanceof Error) {
-    return {
-      name: error.name,
-      message: LOG_FULL_ERRORS ? error.message : "redacted",
-      stack: LOG_FULL_ERRORS ? error.stack : "redacted",
-    };
-  }
 
-  return {
-    message: "Non Error type thrown",
-    type: typeof error,
-  };
+  if (error instanceof Error) {
+    logger.error(`Unhandled Error: ${error.name}`, {
+      errorMessage: LOG_FULL_ERRORS ? error.message : "redacted",
+      stack: LOG_FULL_ERRORS ? error.stack : "redacted",
+    });
+  } else {
+    logger.error("Unhandled Error: Non Error type thrown", {
+      type: typeof error,
+    });
+  }
 }
