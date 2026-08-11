@@ -28,4 +28,5 @@ export interface SessionItem {
   txn?: string;
   evidenceRequest?: EvidenceRequest;
   context?: string;
+  sessionData?: Record<string, string>;
 }
