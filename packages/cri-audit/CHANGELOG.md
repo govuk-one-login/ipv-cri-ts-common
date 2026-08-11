@@ -1,3 +1,9 @@
+## 1.0.5 (2026-08-11)
+
+### 🧱 Updated Dependencies
+
+- Updated @govuk-one-login/cri-types to 1.1.0
+
 ## 1.0.4 (2026-06-04)
 
 ### 🧱 Updated Dependencies

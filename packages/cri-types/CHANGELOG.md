@@ -1,3 +1,13 @@
+## 1.1.0 (2026-08-11)
+
+### 🚀 Features
+
+- **types:** Added sessionData to SessionItem ([1af7f35](https://github.com/govuk-one-login/ipv-cri-ts-common/commit/1af7f35))
+
+### ❤️ Thank You
+
+- Christopher Peerman @chris-dco
+
 ## 1.0.1 (2026-02-04)
 
 This was a version bump only for @govuk-one-login/cri-types to align it with other projects, there were no code changes.
