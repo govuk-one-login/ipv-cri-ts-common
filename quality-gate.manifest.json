@@ -65,10 +65,7 @@
           "checks": [
             {
               "name": "integration",
-              "purpose": [
-                "regression",
-                "new feature"
-              ]
+              "purpose": ["regression", "new feature"]
             }
           ],
           "file": ".github/workflows/check-repo.yml",
