@@ -1,13 +1,9 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import { assertFunctionResultWithTimeout } from "../src/assert-healthcheck";
 
 describe("assertFunctionResultWithTimeout", () => {
   it("returns result and latency when callback succeeds", async () => {
-    const result = await assertFunctionResultWithTimeout(
-      "report",
-      5000,
-      async () => "success"
-    );
+    const result = await assertFunctionResultWithTimeout("report", 5000, async () => "success");
 
     expect(result.result).toBe("success");
     expect(result.error).toBeUndefined();
@@ -16,27 +12,19 @@ describe("assertFunctionResultWithTimeout", () => {
 
   it("throws when callback fails in healthcheck mode", async () => {
     await expect(
-      assertFunctionResultWithTimeout(
-        "healthcheck",
-        5000,
-        async () => {
-          throw new Error("boom");
-        }
-      )
+      assertFunctionResultWithTimeout("healthcheck", 5000, async () => {
+        throw new Error("boom");
+      }),
     ).rejects.toThrow("boom");
   });
 
   it("captures callback errors in report mode", async () => {
-    const result = await assertFunctionResultWithTimeout(
-      "report",
-      5000,
-      async () => {
-        throw new Error("boom");
-      }
-    );
+    const result = await assertFunctionResultWithTimeout("report", 5000, async () => {
+      throw new Error("boom");
+    });
 
     expect(result.result).toBeUndefined();
-  expect(result.error).toBe("Error");
+    expect(result.error).toBe("Error");
   });
 
   it("returns result when validation succeeds", async () => {
@@ -44,10 +32,7 @@ describe("assertFunctionResultWithTimeout", () => {
       "report",
       5000,
       async () => ({ status: 200 }),
-      (response) =>
-        response?.status === 200
-          ? { success: true }
-          : { success: false, message: "invalid status" }
+      (response) => (response?.status === 200 ? { success: true } : { success: false, message: "invalid status" }),
     );
 
     expect(result.result).toEqual({ status: 200 });
@@ -63,8 +48,8 @@ describe("assertFunctionResultWithTimeout", () => {
         () => ({
           success: false,
           message: "validation failed",
-        })
-      )
+        }),
+      ),
     ).rejects.toThrow("validation failed");
   });
 
@@ -76,37 +61,29 @@ describe("assertFunctionResultWithTimeout", () => {
       () => ({
         success: false,
         message: "validation failed",
-      })
+      }),
     );
 
     expect(result.result).toEqual({ status: 500 });
-   expect(result.error).toBe("Error");
+    expect(result.error).toBe("Error");
   });
 
   it("returns timeout error in report mode", async () => {
-    const result = await assertFunctionResultWithTimeout(
-      "report",
-      1,
-      async () => {
-        await new Promise((resolve) => setTimeout(resolve, 50));
-        return "success";
-      }
-    );
+    const result = await assertFunctionResultWithTimeout("report", 1, async () => {
+      await new Promise((resolve) => setTimeout(resolve, 50));
+      return "success";
+    });
 
     expect(result.result).toBeUndefined();
-   expect(result.error).toBe("Error");
+    expect(result.error).toBe("Error");
   });
 
   it("throws timeout error in healthcheck mode", async () => {
     await expect(
-      assertFunctionResultWithTimeout(
-        "healthcheck",
-        1,
-        async () => {
-          await new Promise((resolve) => setTimeout(resolve, 50));
-          return "success";
-        }
-      )
+      assertFunctionResultWithTimeout("healthcheck", 1, async () => {
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        return "success";
+      }),
     ).rejects.toThrow("Timed out");
   });
 
@@ -123,7 +100,7 @@ describe("assertFunctionResultWithTimeout", () => {
           : {
               success: false,
               message: "unexpected status",
-            }
+            },
     );
 
     expect(result.error).toBeUndefined();
