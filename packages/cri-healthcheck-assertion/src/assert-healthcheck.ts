@@ -1,5 +1,3 @@
-import { safeStringifyError } from "./stringify-error.js";
-
 export interface AssertFunctionResultOutput<ResultType = unknown> {
   latency: number;
   result: ResultType | undefined;
@@ -20,7 +18,6 @@ export async function assertFunctionResultWithTimeout<ResultType>(
   let error: string | undefined;
 
   const abortController = new AbortController();
-
   const start = performance.now();
 
   try {
@@ -38,7 +35,7 @@ export async function assertFunctionResultWithTimeout<ResultType>(
       throw e;
     }
 
-    error = safeStringifyError(e);
+    error = e instanceof Error ? e.message : String(e);
   } finally {
     abortController.abort();
   }

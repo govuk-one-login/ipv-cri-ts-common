@@ -24,7 +24,7 @@ describe("assertFunctionResultWithTimeout", () => {
     });
 
     expect(result.result).toBeUndefined();
-    expect(result.error).toBe("Error");
+    expect(result.error).toContain("boom");
   });
 
   it("returns result when validation succeeds", async () => {
@@ -65,7 +65,7 @@ describe("assertFunctionResultWithTimeout", () => {
     );
 
     expect(result.result).toEqual({ status: 500 });
-    expect(result.error).toBe("Error");
+    expect(result.error).toContain("validation failed");
   });
 
   it("returns timeout error in report mode", async () => {
@@ -75,7 +75,7 @@ describe("assertFunctionResultWithTimeout", () => {
     });
 
     expect(result.result).toBeUndefined();
-    expect(result.error).toBe("Error");
+    expect(result.error).toContain("Timed out");
   });
 
   it("throws timeout error in healthcheck mode", async () => {
