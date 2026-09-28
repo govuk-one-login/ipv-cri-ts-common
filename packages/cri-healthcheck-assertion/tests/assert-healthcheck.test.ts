@@ -108,4 +108,26 @@ describe("assertFunctionResultWithTimeout", () => {
       httpStatus: 401,
     });
   });
+
+  it("captures validation failures returned by validation functions", async () => {
+    const result = await assertFunctionResultWithTimeout(
+      "report",
+      5000,
+      async () => ({
+        httpStatus: 500,
+      }),
+      (response) =>
+        response?.httpStatus === 401
+          ? { success: true }
+          : {
+              success: false,
+              message: "unexpected status",
+            },
+    );
+
+    expect(result.result).toEqual({
+      httpStatus: 500,
+    });
+    expect(result.error).toContain("unexpected status");
+  });
 });
