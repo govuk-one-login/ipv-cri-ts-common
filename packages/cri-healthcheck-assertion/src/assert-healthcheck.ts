@@ -35,7 +35,7 @@ export async function assertFunctionResultWithTimeout<ResultType>(
       throw e;
     }
 
-    error = e instanceof Error ? e.message : String(e);
+    error = String(e);
   } finally {
     abortController.abort();
   }
