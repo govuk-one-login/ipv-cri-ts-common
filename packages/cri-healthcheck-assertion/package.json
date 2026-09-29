@@ -1,6 +1,6 @@
 {
   "name": "@govuk-one-login/cri-healthcheck-assertion",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Utility functions for implementing CRI health checks",
   "type": "module",
   "license": "MIT",
