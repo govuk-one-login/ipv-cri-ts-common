@@ -30,6 +30,17 @@ export default defineConfig(
       },
     },
     extends: [...tseslint.configs.recommendedTypeChecked, ...tseslint.configs.stylisticTypeChecked],
+    rules: {
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_",
+          destructuredArrayIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+        },
+      ],
+    },
   },
   {
     files: ["**/*.test.ts", "**/*.spec.ts", "**/tests/**/*", "**/integration-tests/**/*"],
