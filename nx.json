@@ -31,5 +31,6 @@
     {
       "plugin": "@nx/js/typescript"
     }
-  ]
+  ],
+  "analytics": false
 }
