@@ -1,3 +1,17 @@
+# 1.0.0 (2026-10-07)
+
+### 🚀 Features
+
+- ⚠️  make dynamo token repository truly optional ([cfac36e](https://github.com/govuk-one-login/ipv-cri-ts-common/commit/cfac36e))
+
+### ⚠️  Breaking Changes
+
+- make dynamo token repository truly optional  ([cfac36e](https://github.com/govuk-one-login/ipv-cri-ts-common/commit/cfac36e))
+
+### ❤️ Thank You
+
+- Nathaniel Steers
+
 ## 0.1.0 (2026-10-07)
 
 ### 🚀 Features
