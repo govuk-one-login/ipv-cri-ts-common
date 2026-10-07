@@ -1,6 +1,6 @@
 {
   "name": "@govuk-one-login/cri-token-rotator",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Library functions for async access token management",
   "type": "module",
   "license": "MIT",
