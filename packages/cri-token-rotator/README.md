@@ -19,15 +19,26 @@ The following functions are exported:
 | ------------------------------- | ----------------------------------------------------------------------- |
 | `createTokenRotationService()`  | Rotating tokens, skipping any profile whose cached token is still fresh |
 | `createTokenRetrievalService()` | Returning a profile's cached token for use elsewhere                    |
-| `createDynamoTokenRepository()` | Building a `TokenRepository` backed by a DynamoDB table                 |
 
-Consumers will need to implement the exported `TokenCredentialsProvider` and `TokenRotationStrategy` interfaces and pass
-them in to `createTokenRotationService`.
+Consumers will need to implement the exported `TokenCredentialsProvider`, `TokenRotationStrategy` and `TokenRepository`
+(if not using the provided Dynamo token repository) interfaces and pass them in to `createTokenRotationService`.
+
+### DynamoDB token repository
+
+`cri-token-rotator` is does not require a specific database but a Dynamo backed token repository is provided separately
+as a convenience.
+
+```ts
+import { createDynamoTokenRepository } from "@govuk-one-login/cri-token-rotator/dynamodb";
+```
+
+This requires the optional peer dependency `@aws-sdk/lib-dynamodb`. Consumers bringing their own `TokenRepository` can
+ignore this.
 
 See a working example for more inspiration:
 https://github.com/govuk-one-login/ipv-cri-ob-api/tree/main/src/ecospend-token
 
 ## Module syntax
 
-This module is currently built to both CJS and ESM standards, so should work universally. However, we expect be moving
-to ESM-only in the near future.
+This module is currently built to both CJS and ESM standards, so should work universally. However, we expect to be
+moving to ESM-only in the near future.
