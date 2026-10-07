@@ -1,4 +1,3 @@
-export { createDynamoTokenRepository, type DynamoTokenRepositoryConfig } from "./client/dynamo-token-repository.js";
 export * from "./model/token-credentials.js";
 export * from "./model/token-entity.js";
 export * from "./model/token-repository.js";

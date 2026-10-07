@@ -2,7 +2,7 @@ import type { DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
 import type { TokenEntity } from "../../src";
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { createDynamoTokenRepository } from "../../src";
+import { createDynamoTokenRepository } from "../../src/dynamodb";
 
 const TABLE_NAME = "token-rotator-table";
 const PROFILE = "EXAMPLE";
