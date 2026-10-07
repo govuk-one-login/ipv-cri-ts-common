@@ -122,7 +122,9 @@ describe("token-rotation-service", () => {
       expect(credentialsProvider.getCredentials).toHaveBeenCalledTimes(2);
       expect(credentialsProvider.getCredentials).toHaveBeenCalledWith("ALPHA");
       expect(credentialsProvider.getCredentials).toHaveBeenCalledWith("GAMMA");
-      expect(tokenRotationStrategy.rotate).toHaveBeenNthCalledWith(2, PROVIDER_CREDENTIALS);
+      expect(tokenRotationStrategy.rotate).toHaveBeenCalledTimes(2);
+      expect(tokenRotationStrategy.rotate).toHaveBeenCalledWith("ALPHA", PROVIDER_CREDENTIALS);
+      expect(tokenRotationStrategy.rotate).toHaveBeenCalledWith("GAMMA", PROVIDER_CREDENTIALS);
       expect(tokenRepository.putToken).toHaveBeenCalledTimes(2);
       expect(tokenRepository.putToken).toHaveBeenCalledWith({
         id: "ALPHA",
@@ -176,6 +178,8 @@ describe("token-rotation-service", () => {
       expect(credentialsProvider.getCredentials).toHaveBeenCalledWith("ALPHA");
       expect(credentialsProvider.getCredentials).toHaveBeenCalledWith("BETA");
       expect(tokenRotationStrategy.rotate).toHaveBeenCalledTimes(2);
+      expect(tokenRotationStrategy.rotate).toHaveBeenCalledWith("ALPHA", PROVIDER_CREDENTIALS);
+      expect(tokenRotationStrategy.rotate).toHaveBeenCalledWith("BETA", PROVIDER_CREDENTIALS);
       expect(tokenRepository.putToken).toHaveBeenCalledTimes(2);
       expect(tokenRepository.putToken).toHaveBeenCalledWith(expect.objectContaining({ id: "ALPHA" }));
       expect(tokenRepository.putToken).toHaveBeenCalledWith(expect.objectContaining({ id: "BETA" }));
@@ -201,6 +205,7 @@ describe("token-rotation-service", () => {
       expect(credentialsProvider.getCredentials).toHaveBeenCalledOnce();
       expect(credentialsProvider.getCredentials).toHaveBeenCalledWith("GAMMA");
       expect(tokenRotationStrategy.rotate).toHaveBeenCalledOnce();
+      expect(tokenRotationStrategy.rotate).toHaveBeenCalledWith("GAMMA", PROVIDER_CREDENTIALS);
       expect(tokenRepository.putToken).toHaveBeenCalledOnce();
       expect(tokenRepository.putToken).toHaveBeenCalledWith(expect.objectContaining({ id: "GAMMA" }));
     });
@@ -288,6 +293,7 @@ describe("token-rotation-service", () => {
       expect(credentialsProvider.getCredentials).toHaveBeenCalledOnce();
       expect(credentialsProvider.getCredentials).toHaveBeenCalledWith("ALPHA");
       expect(tokenRotationStrategy.rotate).toHaveBeenCalledOnce();
+      expect(tokenRotationStrategy.rotate).toHaveBeenCalledWith("ALPHA", PROVIDER_CREDENTIALS);
       expect(tokenRepository.putToken).toHaveBeenCalledWith({
         id: "ALPHA",
         tokenValue: FRESH_TOKEN,
@@ -311,6 +317,8 @@ describe("token-rotation-service", () => {
 
       expect(tokenRepository.getToken).not.toHaveBeenCalled();
       expect(tokenRotationStrategy.rotate).toHaveBeenCalledTimes(2);
+      expect(tokenRotationStrategy.rotate).toHaveBeenCalledWith("BETA", PROVIDER_CREDENTIALS);
+      expect(tokenRotationStrategy.rotate).toHaveBeenCalledWith("GAMMA", PROVIDER_CREDENTIALS);
       expect(tokenRepository.putToken).toHaveBeenCalledTimes(2);
       expect(tokenRepository.putToken).toHaveBeenCalledWith(expect.objectContaining({ id: "BETA" }));
       expect(tokenRepository.putToken).toHaveBeenCalledWith(expect.objectContaining({ id: "GAMMA" }));

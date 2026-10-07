@@ -29,7 +29,7 @@ export const createTokenRotationService = <TProfile extends string>(
   const refreshWindowSeconds = parseRefreshWindowSeconds(config.refreshWindowSeconds);
 
   const doRotate = async (profile: TProfile, credentials: TokenCredentials): Promise<void> => {
-    const { expiresAtSeconds, tokenValue } = await collaborators.tokenRotationStrategy.rotate(credentials);
+    const { expiresAtSeconds, tokenValue } = await collaborators.tokenRotationStrategy.rotate(profile, credentials);
     await collaborators.tokenRepository.putToken({
       id: profile,
       tokenValue,
