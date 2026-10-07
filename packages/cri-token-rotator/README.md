@@ -8,11 +8,6 @@ This package's purpose is to enable a consumer to easily do the following:
 - Retrieve tokens for use in other systems
 - Assign tokens to profiles to enable test data strategy
 
-> [!WARNING]
->
-> This package is in a pre-release state and its interface may change without warning. Once it's ready for release, this
-> block should be removed and a `feat!` commit message used to create a major version bump.
-
 Further information and source code can be found in the
 [GitHub repository](https://github.com/govuk-one-login/ipv-cri-ts-common/blob/main/packages/cri-token-rotator).
 

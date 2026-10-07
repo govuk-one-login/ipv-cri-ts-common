@@ -1,7 +1,7 @@
 {
   "name": "@govuk-one-login/cri-token-rotator",
   "version": "0.0.0",
-  "description": "",
+  "description": "Library functions for async access token management",
   "type": "module",
   "license": "MIT",
   "repository": {
@@ -18,9 +18,8 @@
     "lint": "npx eslint"
   },
   "peerDependencies": {
-    "@aws-sdk/lib-dynamodb": "^3.1002.0",
-    "@govuk-one-login/cri-logger": "^1.0.0",
-    "@types/aws-lambda": "^8.10.164"
+    "@aws-sdk/lib-dynamodb": "^3.0.0",
+    "@govuk-one-login/cri-logger": "^1.0.0"
   },
   "files": [
     "./dist"
