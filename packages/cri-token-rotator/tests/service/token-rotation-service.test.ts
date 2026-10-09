@@ -8,7 +8,6 @@ import type {
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createTokenRotationService, type TokenRotationServiceConfig } from "../../src";
-import { TokenRotationError } from "../../src/error/token-rotation-errors.js";
 
 type TestProfile = "ALPHA" | "BETA" | "GAMMA";
 
@@ -39,7 +38,7 @@ const buildStrategy = (
     expiresAtSeconds: FRESH_TOKEN_TTL,
     tokenValue: FRESH_TOKEN,
   }),
-): TokenRotationStrategy => ({ rotate });
+): TokenRotationStrategy<TestProfile> => ({ rotate });
 
 const buildTokenEntity = (overrides: Partial<TokenEntity> = {}): TokenEntity => ({
   id: "ALPHA",
@@ -52,7 +51,7 @@ const mockCredentialsProvider = (): TokenCredentialsProvider<TestProfile> => ({
   getCredentials: vi.fn().mockResolvedValue(PROVIDER_CREDENTIALS),
 });
 
-const mockTokenRepository = (): TokenRepository => ({
+const mockTokenRepository = (): TokenRepository<TestProfile> => ({
   getToken: vi.fn().mockResolvedValue(undefined),
   putToken: vi.fn().mockResolvedValue(undefined),
 });
@@ -219,7 +218,7 @@ describe("token-rotation-service", () => {
           expiresAtSeconds: FRESH_TOKEN_TTL,
           tokenValue: FRESH_TOKEN,
         })
-        .mockRejectedValueOnce(new TokenRotationError("crumbs"));
+        .mockRejectedValueOnce(new Error("crumbs"));
       const tokenRotationStrategy = buildStrategy(rotate);
 
       const service = createTokenRotationService(buildConfig({ profiles: ["ALPHA", "BETA"] }), {
@@ -348,7 +347,7 @@ describe("token-rotation-service", () => {
       const credentialsProvider = mockCredentialsProvider();
       const tokenRepository = mockTokenRepository();
       tokenRepository.getToken = vi.fn().mockResolvedValue(buildTokenEntity());
-      const tokenRotationStrategy = buildStrategy(vi.fn().mockRejectedValue(new TokenRotationError("crumbs")));
+      const tokenRotationStrategy = buildStrategy(vi.fn().mockRejectedValue(new Error("crumbs")));
 
       const service = createTokenRotationService(buildConfig(), {
         credentialsProvider,

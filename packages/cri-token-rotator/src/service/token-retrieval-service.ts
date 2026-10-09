@@ -7,14 +7,23 @@ export interface TokenRetrievalService<TProfile extends string> {
   retrieveToken: (profile: TProfile) => Promise<string | undefined>;
 }
 
-interface TokenRetrievalServiceCollaborators {
-  tokenRepository: TokenRepository;
+export interface TokenRetrievalServiceConfig<TProfile extends string> {
+  profiles: readonly TProfile[];
+}
+
+interface TokenRetrievalServiceCollaborators<TProfile extends string> {
+  tokenRepository: TokenRepository<NoInfer<TProfile>>;
 }
 
 export const createTokenRetrievalService = <TProfile extends string>(
-  collaborators: TokenRetrievalServiceCollaborators,
+  config: TokenRetrievalServiceConfig<TProfile>,
+  collaborators: TokenRetrievalServiceCollaborators<TProfile>,
 ): TokenRetrievalService<TProfile> => ({
   retrieveToken: async (profile) => {
+    if (!config.profiles.includes(profile)) {
+      logger.warn("Unknown profile requested", { profile });
+      return undefined;
+    }
     const tokenEntity = await collaborators.tokenRepository.getToken(profile);
     if (!tokenEntity) {
       logger.warn("No cached token found", { profile });

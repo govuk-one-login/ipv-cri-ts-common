@@ -3,7 +3,7 @@ import type { TokenRepository } from "../model/token-repository.js";
 import type { TokenRotationStrategy } from "../model/token-rotation-strategy.js";
 
 import { logger } from "@govuk-one-login/cri-logger";
-import { AggregateRotationError, type RotationFailure } from "../error/token-rotation-errors.js";
+import { AggregateRotationError, type RotationFailure } from "../error/aggregate-rotation-error.js";
 import { parseRefreshWindowSeconds } from "../util/parse-refresh-window.js";
 import { formatTokenExpiry, isTokenDueForRotation } from "../util/token-expiry.js";
 
@@ -12,14 +12,14 @@ export interface TokenRotationService {
 }
 
 export interface TokenRotationServiceConfig<TProfile extends string> {
-  profiles: TProfile[];
+  profiles: readonly TProfile[];
   refreshWindowSeconds: number | string;
 }
 
 interface TokenRotationServiceCollaborators<TProfile extends string> {
-  credentialsProvider: TokenCredentialsProvider<TProfile>;
-  tokenRepository: TokenRepository;
-  tokenRotationStrategy: TokenRotationStrategy;
+  credentialsProvider: TokenCredentialsProvider<NoInfer<TProfile>>;
+  tokenRepository: TokenRepository<NoInfer<TProfile>>;
+  tokenRotationStrategy: TokenRotationStrategy<NoInfer<TProfile>>;
 }
 
 export const createTokenRotationService = <TProfile extends string>(
