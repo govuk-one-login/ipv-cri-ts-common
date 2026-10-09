@@ -12,7 +12,3 @@ export class AggregateRotationError extends Error {
     this.failures = failures;
   }
 }
-
-export class TokenRotationError extends Error {
-  override readonly name = "TokenRotationError";
-}
