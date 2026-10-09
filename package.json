@@ -59,6 +59,6 @@
     "vitest": "^4.1.11"
   },
   "overrides": {
-    "smol-toml": "1.7.1"
+    "smol-toml": "1.9.0"
   }
 }
