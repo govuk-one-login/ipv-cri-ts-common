@@ -1,3 +1,13 @@
+## 1.1.0 (2026-10-09)
+
+### 🚀 Features
+
+- ensure profile types are inferred from configured profiles ([3343193](https://github.com/govuk-one-login/ipv-cri-ts-common/commit/3343193))
+
+### ❤️ Thank You
+
+- Nathaniel Steers
+
 # 1.0.0 (2026-10-07)
 
 ### 🚀 Features
