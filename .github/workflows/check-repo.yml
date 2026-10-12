@@ -110,7 +110,7 @@ jobs:
         uses: nrwl/nx-set-shas@3e9ad7370203c1e93d109be57f3b72eb0eb511b1 # v4.4.0
 
       - name: Install SAM CLI
-        uses: aws-actions/setup-sam@c2a20b1822cc4a6bc594ff7f1dbb658758e383c3 # v2
+        uses: aws-actions/setup-sam@d78e1a4a9656d3b223e59b80676a797f20093133 # v2
 
       - name: Assume AWS Role
         uses: aws-actions/configure-aws-credentials@61815dcd50bd041e203e49132bacad1fd04d2708 # v5.1.1
