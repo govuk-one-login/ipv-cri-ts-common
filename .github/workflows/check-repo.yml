@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run pre-commit
-        uses: govuk-one-login/github-actions/code-quality/run-pre-commit@b5f4f92a0692bf297b08c43745e545e45631f0ee
+        uses: govuk-one-login/github-actions/code-quality/run-pre-commit@29b14fef4e6a98834b6f08ce3120d936b62748a6
         with:
           node-version: 22
           npm-version: 11
