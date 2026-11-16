@@ -38,15 +38,14 @@ jobs:
     outputs:
       coverage-artifact-id: ${{ steps.upload-artifacts.outputs.artifact-id }}
     steps:
-      - name: Pull repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Run tests
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: govuk-one-login/github-actions/node/run-script@cc6fa2aee0ba0d759bbb8ff8a3530cd228035b53
         with:
-          # Required for nx set SHAs: https://github.com/nrwl/nx-set-shas#example-usage
           fetch-depth: 0
-          filter: tree:0
-
-      - name: Set up repository
-        uses: ./.github/actions/install-and-build
+          node-version: 22
+          npm-version: 11
+          run-build: true
 
       - name: Set the base and head SHAs for the nx affected commands in CI
         uses: nrwl/nx-set-shas@3e9ad7370203c1e93d109be57f3b72eb0eb511b1 # v4.4.0
@@ -77,14 +76,14 @@ jobs:
     runs-on: ubuntu-latest
     environment: integration-tests
     steps:
-      - name: Pull repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Run tests
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: govuk-one-login/github-actions/node/run-script@cc6fa2aee0ba0d759bbb8ff8a3530cd228035b53
         with:
           fetch-depth: 0
-          filter: tree:0
-
-      - name: Set up repository
-        uses: ./.github/actions/install-and-build
+          node-version: 22
+          npm-version: 11
+          run-build: true
 
       - name: Set the base and head SHAs for the nx affected commands in CI
         uses: nrwl/nx-set-shas@3e9ad7370203c1e93d109be57f3b72eb0eb511b1 # v4.4.0
