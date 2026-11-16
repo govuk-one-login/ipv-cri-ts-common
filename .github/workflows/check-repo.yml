@@ -23,34 +23,14 @@ jobs:
     if: ${{ github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Pull repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-
-      - name: Set up repository
-        uses: ./.github/actions/install-and-build
-
-      - name: Set up Python
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
-        with:
-          python-version: 3.13
-          cache-dependency-path: ./.github/workflows
-          cache: pip
-
-      - name: Install pre-commit
-        shell: bash
-        run: pip install pre-commit
-
-      - name: Cache pre-commit dependencies
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          key: pre-commit-${{ runner.os }}-${{ hashFiles('**/.pre-commit-config.yaml') }}
-          restore-keys: pre-commit-${{ runner.os }}-
-          path: ~/.cache/pre-commit
-
       - name: Run pre-commit
-        id: run-pre-commit
-        shell: bash
-        run: pre-commit run --all-files --show-diff-on-failure --color=always "${args[@]}"
+        uses: govuk-one-login/github-actions/code-quality/run-pre-commit@b5f4f92a0692bf297b08c43745e545e45631f0ee
+        with:
+          node-version: 22
+          npm-version: 11
+          install-dependencies: true
+          run-build: true
+          all-files: true
 
   unit-tests:
     name: Unit tests
